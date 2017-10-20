@@ -10,7 +10,7 @@ class Login extends Component {
         return (
             <div className="conrtainer">
                     <div className="middle">
-                        <Row>
+                        <Row className="rowName">
                             <Col span={12} className="font">
                                 <div className="logo">
                                     <div className="name">

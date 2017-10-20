@@ -20,21 +20,23 @@
 }
 
 .middle {
-    height: 600px;
+    height: 50%;
     position: relative; /*脱离文档流*/
-    top: 45%; /*偏移*/
+    top: 50%; /*偏移*/
     transform: translateY(-50%);
 }
+.rowName{
+    height: 100%;
+}
 .font{
-    height: 500px;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 .logo{
     width: 100%;
-    height: 400px;
+    height: 80%;
     text-align: center;
     /*background-color: #ffffff;!* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 *!*/
     background-color:rgba(167,171,174,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
@@ -71,7 +73,7 @@
 }
 .loginInput{
     width: 450px;
-    height: 500px;
+    height: 100%;
     background-color: white;
     display: flex;
     align-items: center;
