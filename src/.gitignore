@@ -1,9 +1,10 @@
-node_modules/
+# Created by .ignore support plugin (hsz.mobi)
 ### Example user template template
 ### Example user template
 
 # IntelliJ project files
 .idea
-build
-node_modules
-.vscode
+/npm-debug.log
+/node_modules/
+/.vscode/
+/build/
