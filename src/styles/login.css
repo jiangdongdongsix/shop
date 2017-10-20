@@ -1,0 +1,92 @@
+@import '~antd/dist/antd.css';
+* {
+    margin: 0;
+    padding: 0;
+    color: #666666;
+    font-family: "微软雅黑", "Microsoft YaHei";
+    outline: none;
+}
+
+* img {
+    border: none;
+}
+.conrtainer {
+    width: 98%;
+    height: 1080px;
+    margin: 0 auto;
+    background-image: url("./../images/1_bg_pic.jpg");
+    padding: 0;
+}
+
+.middle {
+    height: 600px;
+    position: relative; /*脱离文档流*/
+    top: 45%; /*偏移*/
+    transform: translateY(-50%);
+}
+.font{
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    width: 100%;
+    height: 400px;
+    text-align: center;
+    /*background-color: #ffffff;!* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 *!*/
+    background-color:rgba(167,171,174,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+    /*opacity: 0.2;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo p{
+    color: white;
+}
+.name{
+    width: 100%;
+}
+
+.chineseName{
+    width: 100%;
+    height: 90px;
+    font-size: 48px;
+    /*background-color: #f8b551;!* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 *!*/
+    background-color:rgba(167,147,120,0.3); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+    /*opacity: 0.3;*/
+    /*filter:Alpha(opacity=30);*/
+
+}
+.EnglishName{
+    width: 100%;
+    height: 40px;
+    font-size: 26px;
+    /*background-color: #f27242;!* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 *!*/
+    background-color:rgba(211,117,083,0.75); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+    /*opacity: 0.75;*/
+
+}
+.loginInput{
+    width: 450px;
+    height: 500px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form {
+    max-width: 300px;
+}
+.login-form-forgot {
+    float: right;
+    color: #f27242;
+}
+.login-form-button {
+    width: 100%;
+    background-color: #f27242;
+    color: white;
+}
+
