@@ -13,7 +13,7 @@ const Card = (props) => {
 }
 
 function mapStateToProps(state) {
-    var info = state.card
+    let info = state.card
 
     return {
         name: info.name,

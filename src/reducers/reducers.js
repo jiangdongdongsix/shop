@@ -1,6 +1,8 @@
+import * as type from './../actions/type';
+
 function cardReducer(state, action) {
     switch (action.type) {
-        case 'CHANGE_NAME':
+        case type.CHANGE_NAME:
             return {
                 name: action.name, // 使用action携带的新name
                 picture: state.picture  // 不需要修改，使用旧state的值
