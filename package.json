@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^2.13.6",
+    "jsencrypt": "^2.3.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
