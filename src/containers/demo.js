@@ -1,17 +1,19 @@
 import React,{ Component } from 'react'
 import { connect } from 'react-redux'
+import { Layout,Row,Col } from 'antd'
 import {changeName} from '../actions/actions'
 import Card from '../components/Card'
 import Dialog from '../components/Dialog'
+import Side from '../components/SideBar'
+import '../styles/sidebar.css'
+import MainContent from "../components/MainContent";
 
 class Demo extends Component{
     render () {
-        return <div className="g-index">
-            <Card />
-            <Dialog />
-            <button onClick={this.props.changeName}>change name</button>
-            <button onClick={this.props.showDialog}>show dialog</button>
-        </div>
+        return <Layout style={{ minHeight: '100vh' }} className="ant-layout-has-sider">
+            <Side/>
+            <MainContent/>
+        </Layout>
     }
 }
 
