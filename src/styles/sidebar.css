@@ -1,4 +1,5 @@
 @import '~antd/dist/antd.css';
+
 #components-layout-demo-side .logo {
     height: 32px;
     background: #333;
@@ -11,3 +12,26 @@
     height: 34px;
     line-height: 34px;
 }
+.sideBgColor{
+    background-color:#2E3441;
+    color:#f0f0f0;
+}
+.sideColor{
+    color: #ededed;
+}
+.sideCenter{
+    text-align:center;
+}
+.ant-layout-sider-trigger{
+    background-color:#2E3441;
+}
+
+.ant-menu.ant-menu-dark .ant-menu-item-selected {
+     background-color: #20242D;
+    color:#ffffff;
+}
+.anticon:before{
+    color:white;
+    font-size:14px;
+}
+
