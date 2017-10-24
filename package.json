@@ -19,5 +19,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "proxy":{ "/restaurant": {
+    "target": "http://172.21.84.161:3333/iqesTT",
+    "ws": true,
+    "secure":false
+    }
   }
+
+
 }
