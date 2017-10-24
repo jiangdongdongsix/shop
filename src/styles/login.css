@@ -45,12 +45,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 100%;
 }
 .logo p{
     color: white;
 }
 .name{
     width: 100%;
+    min-width: 600px;
 }
 
 .chineseName{
@@ -61,6 +63,7 @@
     background-color:rgba(167,147,120,0.3); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
     /*opacity: 0.3;*/
     /*filter:Alpha(opacity=30);*/
+    min-width: 600px;
 
 }
 .EnglishName{
@@ -70,6 +73,7 @@
     /*background-color: #f27242;!* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 *!*/
     background-color:rgba(211,117,083,0.75); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
     /*opacity: 0.75;*/
+    min-width: 600px;
 
 }
 .loginInput{

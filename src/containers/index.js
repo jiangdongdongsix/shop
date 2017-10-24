@@ -22,7 +22,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         changeName () {
-            dispatch(changeName('玛丽'))
+            dispatch({
+                type: 'CHANGE_NAME',
+                name: '葬爱'
+            })
         },
         showDialog () {
             dispatch({

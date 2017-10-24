@@ -1,0 +1,66 @@
+@import '~antd/dist/antd.css';
+* {
+    margin: 0;
+    padding: 0;
+    color: #666666;
+    font-family: "微软雅黑", "Microsoft YaHei";
+    outline: none;
+}
+
+#components-form-demo-register .icp-selector {
+    width: 60px;
+}
+.headerContent{
+    height: 40px;
+    /*line-height: 40px;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.headerContent p{
+    /*padding: 0px 5px;*/
+    margin-left: 10px;
+    float: left;
+}
+.firstForm{
+    background-color: white;
+}
+.block{
+    width: 5px;
+    height: 15px;
+    background-color: #f27242;
+    float: left;
+}
+.myForm{
+    text-align: left;
+    margin-left: -20%;
+    padding: 15px 0;
+    /*background-color: white;*/
+}
+.save{
+    background-color: #f27242;
+    color: white;
+}
+.input {
+    text-align: left;
+    width: 30%;
+    float:left;
+}
+.secondForm {
+    background-color: white;
+}
+.dynamic-delete-button {
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #999;
+    transition: all .3s;
+}
+.dynamic-delete-button:hover {
+    color: #777;
+}
+.dynamic-delete-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
