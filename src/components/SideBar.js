@@ -1,5 +1,4 @@
 import React from 'react';
-import MContent from './MainContent'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -17,36 +16,39 @@ export default class Side extends React.Component {
         return (
                 <Sider
                     collapsible
+                    breakpoint="lg"
                     collapsed={this.state.collapsed}
                     onCollapse={this.onCollapse}
+                    className="sideBgColor"
                 >
-                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline"  className="sideBgColor">
+                        <h2 className="sideColor sideCenter">排队管理客户端</h2>
                         <Menu.Item key="1">
-                            <Icon type="pie-chart" />
-                            <span>Option 1</span>
+                            <Icon type="bell" color="red"/>
+                            <span className="sideColor">叫号清桌</span>
                         </Menu.Item>
                         <Menu.Item key="2">
-                            <Icon type="desktop" />
-                            <span>Option 2</span>
+                            <Icon type="desktop"/>
+                            <span className="sideColor">入场验证</span>
                         </Menu.Item>
-                        <SubMenu
-                            key="sub1"
-                            title={<span><Icon type="user" /><span>User</span></span>}
-                        >
-                            <Menu.Item key="3">Tom</Menu.Item>
-                            <Menu.Item key="4">Bill</Menu.Item>
-                            <Menu.Item key="5">Alex</Menu.Item>
-                        </SubMenu>
-                        <SubMenu
-                            key="sub2"
-                            title={<span><Icon type="team" /><span>Team</span></span>}
-                        >
-                            <Menu.Item key="6">Team 1</Menu.Item>
-                            <Menu.Item key="8">Team 2</Menu.Item>
-                        </SubMenu>
-                        <Menu.Item key="9">
+                        <div style={{paddingLeft:"24px"}}>
+                            <span>门店信息设置</span>
+                        </div>
+                        <Menu.Item key="4">
                             <Icon type="file" />
-                            <span>File</span>
+                            <span className="sideColor">基本信息设置</span>
+                        </Menu.Item>
+                        <Menu.Item key="5">
+                            <Icon type="file" />
+                            <span className="sideColor">排队规则设置</span>
+                        </Menu.Item>
+                        <Menu.Item key="7">
+                            <Icon type="file" />
+                            <span className="sideColor">门店桌位图及桌信息设置</span>
+                        </Menu.Item>
+                        <Menu.Item key="8">
+                            <Icon type="file" />
+                            <span className="sideColor">菜单信息上传更新</span>
                         </Menu.Item>
                     </Menu>
                 </Sider>
