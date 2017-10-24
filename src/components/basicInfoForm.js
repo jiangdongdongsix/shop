@@ -1,73 +1,87 @@
 import React, { Component } from 'react';
 // import  '../styles/basic.css';
-import { Form, Input, TimePicker, Select,Row, Col,Button } from 'antd';
+import moment from 'moment';
+import { Form, Input, TimePicker, Select,Row, Col,Button,message,Icon} from 'antd';
 const FormItem = Form.Item;
-const Option = Select.Option;
-
-const residences = [{
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [{
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [{
-            value: 'xihu',
-            label: 'West Lake',
-        }],
-    }],
-}, {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [{
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [{
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-        }],
-    }],
-}];
 
 const config = {
     rules: [{ type: 'object', required: true, message: 'Please select time!' }],
 };
 
-class RegistrationForm extends React.Component {
-    state = {
-        confirmDirty: false,
+const success = () => {
+    message.success('保存成功');
+};
+const error = () => {
+    message.error('保存失败');
+};
 
-    };
+const warning = () => {
+    message.warning('This is message of warning');
+};
+
+
+class RegistrationForm extends React.Component {
+
+    //提交数据
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                console.log(values.openTime.format("HH:mm:ss"));
+                let info = {
+                    name: values.name,
+                    detailAddress:values.detailAddress,
+                    telephone:values.telephone,
+                    endTime:values.endTime.format("HH:mm:ss"),
+                    openTime:values.openTime.format("HH:mm:ss"),
+                    id:values.id
+                };
+                fetch('/restaurant/restaurantInfo', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(info)
+                }).then(function(response) {
+                    return response.json();
+                }).then(function (jsonData) {
+                   console.log("保存成功")
+                    success();
+                }).catch(function () {
+                    error();
+                    console.log('出错了');
+                });
+
             }
         });
     }
-    handleConfirmBlur = (e) => {
-        const value = e.target.value;
-        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+
+    //初始化数据
+    componentDidMount(){
+        const formFather = this.props.form ;
+        fetch("/restaurant/restaurantInfo")
+            .then(function(response) {
+                return response.json();
+            }).then(function (jsonData) {
+            console.log(jsonData);
+            formFather.setFieldsValue({
+                name: jsonData.restaurantInfo.name,
+                detailAddress:jsonData.restaurantInfo.detailAddress,
+                telephone:jsonData.restaurantInfo.telephone,
+                endTime:moment(jsonData.restaurantInfo.endTime, 'HH:mm:ss'),
+                openTime:moment(jsonData.restaurantInfo.openTime, 'HH:mm:ss'),
+                id:jsonData.restaurantInfo.id,
+            });
+        }).catch(function () {
+            console.log('出错了');
+        });
     }
 
-
-    checkPassword = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && value !== form.getFieldValue('password')) {
-            callback('Two passwords that you enter is inconsistent!');
-        } else {
-            callback();
-        }
-    }
-    checkConfirm = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && this.state.confirmDirty) {
-            form.validateFields(['confirm'], { force: true });
-        }
-        callback();
-    }
     render() {
         const { getFieldDecorator } = this.props.form;
+        const timeformate = "HH:mm:ss";
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -78,25 +92,6 @@ class RegistrationForm extends React.Component {
                 sm: { span: 14 },
             },
         };
-        const tailFormItemLayout = {
-            wrapperCol: {
-                xs: {
-                    span: 24,
-                    offset: 0,
-                },
-                sm: {
-                    span: 14,
-                    offset: 6,
-                },
-            },
-        };
-        const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: '86',
-        })(
-            <Select className="icp-selector">
-                <Option value="86">+86</Option>
-            </Select>
-        );
         return (
             <div className="firstForm">
             <Row className="headerContent">
@@ -109,10 +104,9 @@ class RegistrationForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="门店名称"
-                    hasFeedback
                     className="formItem"
                 >
-                    {getFieldDecorator('email', {
+                    {getFieldDecorator('name', {
                         rules: [{
                             required: true, message: 'Please input your E-mail!',
                         }],
@@ -123,9 +117,8 @@ class RegistrationForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="门店详细地址"
-                    hasFeedback
                 >
-                    {getFieldDecorator('password', {
+                    {getFieldDecorator('detailAddress', {
                         rules: [{
                             required: true, message: 'Please input your password!',
                         }],
@@ -136,9 +129,8 @@ class RegistrationForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="门店电话"
-                    hasFeedback
                 >
-                    {getFieldDecorator('password', {
+                    {getFieldDecorator('telephone', {
                         rules: [{
                             required: true, message: 'Please input your password!',
                         }],
@@ -151,28 +143,31 @@ class RegistrationForm extends React.Component {
                     label="门店开始时间"
                     className="startName"
                 >
-                    {getFieldDecorator('time-picker', config)(
-                        <TimePicker />
+                    {getFieldDecorator('openTime', config)(
+                        <TimePicker format={timeformate} />
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
                     label="门店结束时间"
                 >
-                    {getFieldDecorator('time-picker', config)(
-                        <TimePicker />
+                    {getFieldDecorator('endTime', config)(
+                        <TimePicker format={timeformate} />
                     )}
                 </FormItem>
-                {/*<FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>*/}
-                    {/*{getFieldDecorator('agreement', {*/}
-                        {/*valuePropName: 'checked',*/}
-                    {/*})(*/}
-                        {/*<Checkbox>I have read the <a>agreement</a></Checkbox>*/}
-                    {/*)}*/}
-                {/*</FormItem>*/}
-                {/*<FormItem {...tailFormItemLayout}>*/}
-                    {/*<Button type="primary" htmlType="submit" size="large">Register</Button>*/}
-                {/*</FormItem>*/}
+                <FormItem
+                    {...formItemLayout}
+                    label="id"
+                    className="idName"
+                >
+                    {getFieldDecorator('id', {
+                        rules: [{
+                            required: true, message: 'Please input your password!',
+                        }],
+                    })(
+                        <Input className="input" />
+                    )}
+                </FormItem>
             </Form>
             </div>
         );
