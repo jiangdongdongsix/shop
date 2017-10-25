@@ -2,16 +2,16 @@ import React,{ Component } from 'react'
 import { Layout,Row,Col } from 'antd'
 import Side from '../components/SideBar'
 import '../styles/sidebar.css'
-import WaitVerify from "../components/WaitVerify";
+import SetMenu from "../components/UpdateMenu";
 
-class Verify extends Component{
+class UpdateMenu extends Component{
     render () {
         return <Layout style={{ minHeight: '100vh' }} className="ant-layout-has-sider sideBgColor">
             <Side/>
-            <WaitVerify/>
+            <SetMenu/>
         </Layout>
     }
 }
 
 
-export default Verify
+export default UpdateMenu
