@@ -11,6 +11,7 @@ import Login from './containers/login';
 import Verify from './containers/waitVerify';
 import Menu from './containers/updateMenu';
 import Table from './containers/tableSet';
+import tableTyplePage from './containers/tableTyplePage';
 
 
 const routes = (
@@ -21,6 +22,7 @@ const routes = (
   <Route path='/basicInfo' component={BasicInfo} />
   <Route path='/menu' component={Menu} />
   <Route path='/tableset' component={Table} />
+  <Route path='/tabletype' component={tableTyplePage} />
 </div>
 );
 
