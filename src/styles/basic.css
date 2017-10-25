@@ -68,6 +68,10 @@
     display: none;
 }
 
+.anticon:before{
+    color: grey;
+}
+
 .ant-upload-select-picture-card i {
     font-size: 28px;
     color: #999;
@@ -77,4 +81,65 @@
     margin-top: 8px;
     font-size: 12px;
     color: #666;
+}
+
+/*门店直立机显示播报*/
+.machineConfig{
+    padding: 40px 40px;
+}
+
+.machineConfig p{
+    margin-top: -30px;
+    padding: 10px 0;
+    color: orange;
+}
+
+.Config{
+    padding: 15px 0;
+}
+.Config .firstRow{
+    margin-top: -4px;
+    padding-bottom:15px;
+}
+.Config .switch{
+   /*background-color: #f27242;*/
+}
+
+.Config .black{
+    /*background-color: #f27242;*/
+    background-color: black;
+}
+
+.Config .white{
+    /*background-color: #f27242;*/
+    background-color: white;
+}
+
+.Config .blue{
+    /*background-color: #f27242;*/
+    background-color: dodgerblue;
+}
+.pictureConfig{
+    padding: 0 40px;
+    /*display: flex;*/
+    /*align-content: center;*/
+}
+
+.pictureConfig .show{
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+}
+
+
+
+.exampleShow{
+    width: 300px;
+    height: 200px;
+    text-align: center;
+    line-height: 100px;
+    margin-left: 50px;
+    padding: 20px 10px;
+    background-color: black;
+
 }
