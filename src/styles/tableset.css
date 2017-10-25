@@ -1,0 +1,16 @@
+.Table-title{
+    display:inline-block;
+    padding:0 0 0 5px;
+    margin: 0 8px 8px 0;
+    font-weight:bolder;
+    font-size:14px;
+    border-left:3px solid #f04134;
+}
+
+.Table-info{
+    font-size: 8px;
+    color: rgb(240, 65, 52);
+    padding-top: 6px;
+    display: inline-block;
+}
+

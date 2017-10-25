@@ -1,12 +1,10 @@
 import React,{ Component } from 'react'
-import { connect } from 'react-redux'
 import { Layout,Row,Col } from 'antd'
-import {changeName} from '../actions/actions'
 import Side from '../components/SideBar'
 import '../styles/sidebar.css'
 import CallClear from "../components/CallClear";
 
-class Demo extends Component{
+class CallNumber extends Component{
     render () {
         return <Layout style={{ minHeight: '100vh' }} className="ant-layout-has-sider sideBgColor">
             <Side/>
@@ -15,21 +13,4 @@ class Demo extends Component{
     }
 }
 
-function mapStateToProps(state) {
-    return state
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        changeName () {
-            dispatch(changeName('玛丽2号'))
-        },
-        showDialog () {
-            dispatch({
-                type: 'SHOW_DIALOG'
-            })
-        }
-    }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(Demo)
+export default CallNumber

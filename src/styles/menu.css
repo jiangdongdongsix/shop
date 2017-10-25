@@ -1,0 +1,33 @@
+.ant-btn-danger {
+    background-color:#f04134;
+    color:white;
+    border-color: #d9d9d9;
+}
+
+.Menu-table{
+    border: 1px solid #e8e4e4;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+    padding: 16px 8px;
+    word-break: break-word;
+    text-align:left;
+}
+span .anticon:before{
+    color:grey;
+}
+
+table .anticon:before {
+    color:black;
+    font-size: 18px;
+}
+.Menu-operation{
+    cursor: pointer;
+    padding:0 10px;
+}
+
+.ant-switch-checked {
+    background-color: #f04134;
+}
