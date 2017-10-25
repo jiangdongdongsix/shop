@@ -15,15 +15,15 @@ import tableTyplePage from './containers/tableTyplePage';
 
 
 const routes = (
-<div style={{height:'100%'}}>
-  <Route exact path='/' component={Login} />
-  <Route path='/callnumber' component={CallNumber} />
-  <Route path='/verify' component={Verify} />
-  <Route path='/basicInfo' component={BasicInfo} />
-  <Route path='/menu' component={Menu} />
-  <Route path='/tableset' component={Table} />
-  <Route path='/tabletype' component={tableTyplePage} />
-</div>
+        <div style={{height:'100%'}}>
+          <Route exact path='/' component={Login} />
+          <Route path='/callnumber' component={CallNumber} />
+          <Route path='/verify' component={Verify} />
+          <Route path='/basicInfo' component={BasicInfo} />
+          <Route path='/menu' component={Menu} />
+          <Route path='/tableset' component={Table} />
+          <Route path='/tabletype' component={tableTyplePage} />
+        </div>
 );
 
 export default routes
