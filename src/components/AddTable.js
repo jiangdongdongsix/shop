@@ -77,12 +77,11 @@ export default class AddTable extends React.Component {
             }
             console.log('Received values of form: ', values);
             let tableNumber= {
-                name: values.index,
+                tableName:values.index,
                 area:values.area,
-                tableTypeName: values.type,
+                tableTypeDescribe:values.type,
                 eatMaxNumber:values.pNumber
                 };
-
             console.log(tableNumber);
             fetch('/restaurant/tableNumber', {
                 method: 'POST',
@@ -94,7 +93,7 @@ export default class AddTable extends React.Component {
             }).then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
-                console.log("保存成功")
+                console.log("保存成功");
                 success();
             }).catch(function () {
                 error();

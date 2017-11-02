@@ -111,7 +111,7 @@ export default class WaitVerify extends React.Component{
             }).catch(function () {
                 console.log('出错了');
             });
-        }
+        };
         showEdit(Id) {
             let that = this;
             console.log(that.state.data);

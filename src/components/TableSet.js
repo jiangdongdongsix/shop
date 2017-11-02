@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table,Layout,Button,Row,Col,Input,Switch,Popconfirm,Icon,Modal,Form } from 'antd';
+import { Table,Layout,Button,Row,Col,Input,Popconfirm,Icon,message } from 'antd';
 import HeaderCustom from './HeaderCustom'
 import AddTable from './AddTable'
 import './../styles/tableset.css'
@@ -14,15 +14,21 @@ export default class WaitVerify extends React.Component{
             table:[
                 {
                     id:'',
+                    name:'',
                     type:'',
                     area:'',
                     pNumber:''
                 }
             ]
         };
+        this.confirm = this.confirm.bind(this);
+        function cancel(e){
+            console.log(e);
+            message.error('取消删除');
+        };
         this.columns = [{
             title: '餐桌编号',
-            dataIndex: 'id',
+            dataIndex: 'name',
             width: '18%'
         }, {
             title: '餐桌类型',
@@ -39,42 +45,59 @@ export default class WaitVerify extends React.Component{
         },{
             title: '',
             dataIndex: 'operation',
-            render(){
+            render:(text, record, index)=>{
+                const Id = record.id;
                 return(
                     <span>
                         <Icon type="edit" className="Menu-operation"/>
-                        <Popconfirm title="确定删除?">
+                        <Popconfirm title="确定删除?"  onConfirm={this.confirm.bind(this,Id)} onCancel={cancel}>
                             <Icon type="delete" className="Menu-operation"/>
                         </Popconfirm>
                     </span>
+
                 )
             }
         }];
     }
     componentDidMount(){
         let that = this;
-        fetch("/restaurant/tableNumber/tableNumbers")
+        fetch("/restaurant/tableNumber/all")
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
             console.log(jsonData);
-            console.log(jsonData.tableNumber.length);
-            let len = jsonData.tableNumber.length;
+            let len = jsonData.tableNumbers.length;
             let tableNumber = [];
             for(let i=0;i<len;i++) {
                 tableNumber.push({
-                    id:jsonData.tableNumber[i].name,
-                    type:jsonData.tableNumber[i].tableType.tableTypeName,
-                    area:jsonData.tableNumber[i].area,
-                    pNumber:jsonData.tableNumber[i].tableType.eatMaxNumber
+                    id:jsonData.tableNumbers[i].id,
+                    name:jsonData.tableNumbers[i].name + jsonData.tableNumbers[i].id,
+                    type:jsonData.tableNumbers[i].tableType.describe,
+                    area:jsonData.tableNumbers[i].restaurantArea.areaName,
+                    pNumber:jsonData.tableNumbers[i].tableType.eatMaxNumber
                 })
             }
             that.setState({table:tableNumber});
-            console.log(tableNumber);
         }).catch(function () {
             console.log('出错了');
         });
-    }
+    };
+    confirm(id){
+        let that = this;
+        console.log(id);
+        fetch("/restaurant/tableNumber?id="+id, {
+            method: 'DELETE'
+        }).then(function(response) {
+            return response.json();
+        }).then(function (jsonData) {
+            if(jsonData.ErrorCode === 0){
+                console.log('删除成功');
+            }
+            console.log(that.state.table);
+        }).catch(function () {
+            console.log('出错了');
+        });
+    };
 
     render(){
         return (

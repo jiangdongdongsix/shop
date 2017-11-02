@@ -68,10 +68,34 @@ export default class AddMenu extends React.Component {
     };
     showModal = () => {
         this.setState({ visible: true });
-    }
+    };
     handleCancel = () => {
         this.setState({ visible: false });
-    }
+    };
+    UpdatePage =() =>{
+        let that = this;
+        fetch("/restaurant/menu/menus")
+            .then(function(response) {
+                return response.json();
+            }).then(function (jsonData) {
+            console.log(jsonData);
+            let len = jsonData.menus.length;
+            let menuInfo = [];
+            for(let i=0;i<len;i++) {
+                menuInfo.push({
+                    id:jsonData.menus[i].id,
+                    name:jsonData.menus[i].menuName,
+                    Price:jsonData.menus[i].menuPrice,
+                    props:jsonData.menus[i].menuType,
+                    VipPrice:jsonData.menus[i].memberMenuPrice,
+                    describe:jsonData.menus[i].describe
+                })
+            }
+            that.setState({data:menuInfo});
+        }).catch(function () {
+            console.log('出错了');
+        });
+    };
     handleCreate = () => {
         const form = this.form;
         form.validateFields((err, values) => {
@@ -80,7 +104,7 @@ export default class AddMenu extends React.Component {
             }
             console.log('Received values of form: ', values);
             let addMenu = {
-                menuName: values.name,
+                menuName:values.name,
                 menuPrice:values.Price,
                 menuType:values.props,
                 memberMenuPrice:values.VipPrice,
@@ -94,11 +118,13 @@ export default class AddMenu extends React.Component {
                 },
                 body: JSON.stringify(addMenu)
             }).then(function(response) {
+                console.log(addMenu);
+                console.log(response);
                 return response.json();
-                console.log(111);
             }).then(function () {
-                console.log("保存成功")
+                console.log("保存成功");
                 success();
+
             }).catch(function () {
                 error();
                 console.log('出错了');
