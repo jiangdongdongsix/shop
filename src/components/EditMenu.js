@@ -86,7 +86,7 @@ export default class EditMenu extends React.Component {
                 memberMenuPrice:values.VipPrice,
                 describe:values.describe
             };
-            fetch('/restaurant/menu', {
+            fetch('/iqesTT/restaurant/menu', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

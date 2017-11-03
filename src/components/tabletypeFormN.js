@@ -138,9 +138,11 @@ export default class TableTypeForm extends React.Component{
 
 
     edit(index) {
+        console.log(index);
         const { data } = this.state;
         Object.keys(data[index]).forEach((item) => {
             if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
+                console.log("unnnnnnnnnn");
                 data[index][item].editable = true;
             }
         });

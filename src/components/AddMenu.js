@@ -72,31 +72,9 @@ export default class AddMenu extends React.Component {
     handleCancel = () => {
         this.setState({ visible: false });
     };
-    UpdatePage =() =>{
-        let that = this;
-        fetch("/restaurant/menu/menus")
-            .then(function(response) {
-                return response.json();
-            }).then(function (jsonData) {
-            console.log(jsonData);
-            let len = jsonData.menus.length;
-            let menuInfo = [];
-            for(let i=0;i<len;i++) {
-                menuInfo.push({
-                    id:jsonData.menus[i].id,
-                    name:jsonData.menus[i].menuName,
-                    Price:jsonData.menus[i].menuPrice,
-                    props:jsonData.menus[i].menuType,
-                    VipPrice:jsonData.menus[i].memberMenuPrice,
-                    describe:jsonData.menus[i].describe
-                })
-            }
-            that.setState({data:menuInfo});
-        }).catch(function () {
-            console.log('出错了');
-        });
-    };
+
     handleCreate = () => {
+        const that = this;
         const form = this.form;
         form.validateFields((err, values) => {
             if (err) {
@@ -110,7 +88,7 @@ export default class AddMenu extends React.Component {
                 memberMenuPrice:values.VipPrice,
                 describe:values.describe
             };
-            fetch('/restaurant/menu', {
+            fetch('/iqesTT/restaurant/menu', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -123,8 +101,8 @@ export default class AddMenu extends React.Component {
                 return response.json();
             }).then(function () {
                 console.log("保存成功");
+                that.props.refersh();
                 success();
-
             }).catch(function () {
                 error();
                 console.log('出错了');

@@ -1,0 +1,12 @@
+.queuePanel{
+    border:1px #D5DDE1 solid;
+    padding-top:10px;
+}
+.queueIcon{
+    background-color:#4FB5F7;
+    color:white;
+    text-align:center;
+    height:28px;
+    line-height:28px;
+    cursor: pointer;
+}

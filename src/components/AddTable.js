@@ -70,6 +70,7 @@ export default class AddTable extends React.Component {
         this.setState({ visible: false });
     };
     handleCreate = () => {
+        const that = this;
         const form = this.form;
         form.validateFields((err, values) => {
             if (err) {
@@ -83,7 +84,7 @@ export default class AddTable extends React.Component {
                 eatMaxNumber:values.pNumber
                 };
             console.log(tableNumber);
-            fetch('/restaurant/tableNumber', {
+            fetch('/iqesTT/restaurant/tableNumber', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -94,6 +95,7 @@ export default class AddTable extends React.Component {
                 return response.json();
             }).then(function (jsonData) {
                 console.log("保存成功");
+                that.props.refersh();
                 success();
             }).catch(function () {
                 error();

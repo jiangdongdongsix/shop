@@ -59,14 +59,16 @@ export default class WaitVerify extends React.Component{
             }
         }];
     }
-    componentDidMount(){
+
+    dataInit(){
         let that = this;
-        fetch("/restaurant/tableNumber/all")
+        fetch("/iqesTT/restaurant/tableNumber/all")
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
             console.log(jsonData);
             let len = jsonData.tableNumbers.length;
+            console.log(len);
             let tableNumber = [];
             for(let i=0;i<len;i++) {
                 tableNumber.push({
@@ -77,28 +79,31 @@ export default class WaitVerify extends React.Component{
                     pNumber:jsonData.tableNumbers[i].tableType.eatMaxNumber
                 })
             }
+            console.log(tableNumber);
             that.setState({table:tableNumber});
         }).catch(function () {
             console.log('出错了');
         });
-    };
+    }
+
     confirm(id){
         let that = this;
-        console.log(id);
-        fetch("/restaurant/tableNumber?id="+id, {
+        fetch("/iqesTT/restaurant/tableNumber?id="+id, {
             method: 'DELETE'
         }).then(function(response) {
             return response.json();
         }).then(function (jsonData) {
-            if(jsonData.ErrorCode === 0){
+            if(jsonData.ErrorCode === '0'){
                 console.log('删除成功');
+                that.dataInit();
             }
-            console.log(that.state.table);
         }).catch(function () {
             console.log('出错了');
         });
     };
-
+    componentWillMount(){
+        this.dataInit();
+    };
     render(){
         return (
             <Layout style={{backgroundColor:'white'}}>
@@ -126,7 +131,7 @@ export default class WaitVerify extends React.Component{
                             </Row>
                             <Row>
                                 <Col span={2}>
-                                    <AddTable/>
+                                    <AddTable refersh = {this.dataInit.bind(this)}/>
                                 </Col>
                                 <Col span={3}></Col>
                                 <Col span={2}>
