@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { Upload, Icon, Modal,Row,Col,Select ,message  } from 'antd';
+import { Upload, Icon, Modal,Row,Col,Select ,message,Button  } from 'antd';
 const Option = Select.Option;
 
 const successDelete = () => {
     message.success('删除成功');
 };
-
+const success = () => {
+    message.success('保存成功');
+};
+const error = () => {
+    message.error('保存失败');
+};
 class PicturesWall extends React.Component {
     state = {
+        displayArea:"0",
         previewVisible: false,
         previewImage: '',
-        fileList: [{
-            uid: -1,
-            name: 'xxx.png',
-            status: 'done',
-            url: 'http://172.21.84.73:3333/iqesTT/upload/1508835585034_生活照片.jpg',
-        }],
+        fileList: [],
     };
 
     handleCancel = () => this.setState({ previewVisible: false })
@@ -43,23 +44,21 @@ class PicturesWall extends React.Component {
 
     handleChange = ({ fileList }) => this.setState({ fileList })
 
-    onChange = (value) => {
-        console.log(value);
-    }
 
     //初始化数据
     componentDidMount(){
          const that = this;
          let fileList = [];
-        fetch("/restaurant/restaurantPhoto/photos")
+        fetch("/restaurant/restaurantPhoto/displayArea?displayArea="+that.state.displayArea)
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
             console.log(jsonData);
-            jsonData.restaurantPhotoList.map((k,index) => {
+            jsonData.restaurantPhotos.map((k,index) => {
+                console.log(k);
                 let obj ={
                     uid: k.id,
-                    name: 'xxx.png',
+                    name: k.id+'.png',
                     status: 'done',
                     url: 'http://172.21.84.161:3333'+k.url,
                 }
@@ -71,6 +70,41 @@ class PicturesWall extends React.Component {
         }).catch(function () {
             console.log('出错了');
         });
+    }
+
+
+    handleChangeArea = (value) => {
+        console.log(value);
+        const that = this;
+        let fileList = [];
+        console.log(`selected ${value}`);
+        this.setState({
+            displayArea:value,
+        });
+        console.log(that.state.displayArea);
+        fetch("/restaurant/restaurantPhoto/displayArea?displayArea="+value)
+            .then(function(response) {
+                return response.json();
+            }).then(function (jsonData) {
+            console.log(jsonData);
+            jsonData.restaurantPhotos.map((k,index) => {
+                console.log(k);
+                let obj ={
+                    uid: k.id,
+                    name: k.id+'.png',
+                    status: 'done',
+                    url: 'http://172.21.84.161:3333'+k.url,
+                }
+                fileList.push(obj);
+                that.setState({
+                    fileList:fileList
+                })
+            })
+     })
+    }
+
+    handleSubmitBroadcast(){
+        success();
     }
 
     render() {
@@ -85,18 +119,18 @@ class PicturesWall extends React.Component {
             <div className="firstForm">
                 <Row className="headerContent">
                     {/*<Col span={1}><div className="block"></div></Col>*/}
-                    <Col span={2}><div className="block"></div><p>店面照片设置</p></Col>
-                    <Col span={18}><hr/></Col>
-                    <Col span={4}></Col>
+                    <Col span={3}><div className="block"></div><p>店面照片设置</p></Col>
+                    <Col span={17}><hr/></Col>
+                    <Col span={4}><Button type="danger" className="save" onClick={this.handleSubmitBroadcast.bind(this)}>保存</Button></Col>
                 </Row>
                 <div className="pictureConfig">
                     <Row className="show">
                         <Col span={2}><p>请选择显示位置</p></Col>
                         <Col span={6}>
-                            <Select defaultValue="jack" style={{ width: 120 }} >
-                                <Option value="jack">请选择显示位置</Option>
-                                <Option value="lucy">直立机轮播区</Option>
-                                <Option value="disabled">APP图片</Option>
+                            <Select  style={{ width: 120 }} onChange={this.handleChangeArea} value ={this.state.displayArea}>
+                                <Option value="0">请选择显示位置</Option>
+                                <Option value="1">直立机轮播区</Option>
+                                <Option value="2">APP图片</Option>
                             </Select>
                         </Col>
                         <Col span={15}></Col>
@@ -106,14 +140,14 @@ class PicturesWall extends React.Component {
                             <img alt="example" style={{ width: '100%' }} src={previewImage} />
                         </Modal>
                         <Upload
-                            action="/restaurant/restaurantPhoto?displayArea=1234"
+                            action={"/restaurant/restaurantPhoto?displayArea="+ this.state.displayArea}
                             listType="picture-card"
                             fileList={fileList}
                             onRemove={this.handleRemove}
                             onPreview={this.handlePreview}
                             onChange={this.handleChange}
                         >
-                            {fileList.length >= 5 ? null : uploadButton}
+                            { fileList.length >= 5 || this.state.displayArea == 0 ? null : uploadButton}
                         </Upload>
                      </div>
                 </div>

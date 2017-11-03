@@ -20,8 +20,8 @@ class BasicContent extends React.Component{
                     <BasicInfoForm />
                     {/*<ChangeFormCountBySelf />*/}
                     <PicturesWall />
-                    <ShowConfigForm />
-                    <ReserveTimeConfig />
+                    {/*<ShowConfigForm />*/}
+                    {/*<ReserveTimeConfig />*/}
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>
                     Ant Design ©2016 Created by Ant UED
