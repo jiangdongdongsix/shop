@@ -30,7 +30,7 @@ class PicturesWall extends React.Component {
 
     handleRemove= (file) => {
         console.log(file.uid)
-        fetch("/restaurant/restaurantPhoto?id="+file.uid,{
+        fetch("/iqesTT/restaurant/restaurantPhoto?id="+file.uid,{
             method: 'DELETE',
         }).then(function(response) {
             return response.json();
@@ -49,7 +49,7 @@ class PicturesWall extends React.Component {
     componentDidMount(){
          const that = this;
          let fileList = [];
-        fetch("/restaurant/restaurantPhoto/displayArea?displayArea="+that.state.displayArea)
+        fetch("/iqesTT/restaurant/restaurantPhoto/displayArea?displayArea="+that.state.displayArea)
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
@@ -60,7 +60,7 @@ class PicturesWall extends React.Component {
                     uid: k.id,
                     name: k.id+'.png',
                     status: 'done',
-                    url: 'http://172.21.84.161:3333'+k.url,
+                    url: k.url,
                 }
                 fileList.push(obj);
                 that.setState({
@@ -82,7 +82,7 @@ class PicturesWall extends React.Component {
             displayArea:value,
         });
         console.log(that.state.displayArea);
-        fetch("/restaurant/restaurantPhoto/displayArea?displayArea="+value)
+        fetch("/iqesTT/restaurant/restaurantPhoto/displayArea?displayArea="+value)
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
@@ -93,7 +93,7 @@ class PicturesWall extends React.Component {
                     uid: k.id,
                     name: k.id+'.png',
                     status: 'done',
-                    url: 'http://172.21.84.161:3333'+k.url,
+                    url:k.url
                 }
                 fileList.push(obj);
                 that.setState({
@@ -140,7 +140,7 @@ class PicturesWall extends React.Component {
                             <img alt="example" style={{ width: '100%' }} src={previewImage} />
                         </Modal>
                         <Upload
-                            action={"/restaurant/restaurantPhoto?displayArea="+ this.state.displayArea}
+                            action={"/iqesTT/restaurant/restaurantPhoto?displayArea="+ this.state.displayArea}
                             listType="picture-card"
                             fileList={fileList}
                             onRemove={this.handleRemove}

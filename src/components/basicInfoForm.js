@@ -37,7 +37,7 @@ class RegistrationForm extends React.Component {
                     openTime:values.openTime.format("HH:mm:ss"),
                     id:values.id
                 };
-                fetch('/restaurant/restaurantInfo', {
+                fetch('/iqesTT/restaurant/restaurantInfo', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -61,19 +61,22 @@ class RegistrationForm extends React.Component {
     //初始化数据
     componentDidMount(){
         const formFather = this.props.form ;
-        fetch("/restaurant/restaurantInfo")
+        fetch("/iqesTT/restaurant/restaurantInfo")
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
             console.log(jsonData);
-            formFather.setFieldsValue({
-                name: jsonData.restaurantInfo.name,
-                detailAddress:jsonData.restaurantInfo.detailAddress,
-                telephone:jsonData.restaurantInfo.telephone,
-                endTime:moment(jsonData.restaurantInfo.endTime, 'HH:mm:ss'),
-                openTime:moment(jsonData.restaurantInfo.openTime, 'HH:mm:ss'),
-                id:jsonData.restaurantInfo.id,
-            });
+            if(typeof jsonData.restaurantInfo !== 'undefined'){
+                formFather.setFieldsValue({
+                    name: jsonData.restaurantInfo.name,
+                    detailAddress:jsonData.restaurantInfo.detailAddress,
+                    telephone:jsonData.restaurantInfo.telephone,
+                    endTime:moment(jsonData.restaurantInfo.endTime, 'HH:mm:ss'),
+                    openTime:moment(jsonData.restaurantInfo.openTime, 'HH:mm:ss'),
+                    id:jsonData.restaurantInfo.id,
+                });
+            }
+
         }).catch(function () {
             console.log('出错了');
         });
@@ -108,7 +111,7 @@ class RegistrationForm extends React.Component {
                 >
                     {getFieldDecorator('name', {
                         rules: [{
-                            required: true, message: 'Please input your E-mail!',
+                            required: true, message: '请输入门店名称',
                         }],
                     })(
                         <Input className="input"/>
@@ -120,7 +123,7 @@ class RegistrationForm extends React.Component {
                 >
                     {getFieldDecorator('detailAddress', {
                         rules: [{
-                            required: true, message: 'Please input your password!',
+                            required: true, message: '请输入门店详细地址',
                         }],
                     })(
                         <Input className="input" />
@@ -132,7 +135,7 @@ class RegistrationForm extends React.Component {
                 >
                     {getFieldDecorator('telephone', {
                         rules: [{
-                            required: true, message: 'Please input your password!',
+                            required: true, message: '请输入门店电话   ',
                         }],
                     })(
                         <Input className="input" />
@@ -162,7 +165,7 @@ class RegistrationForm extends React.Component {
                 >
                     {getFieldDecorator('id', {
                         rules: [{
-                            required: true, message: 'Please input your password!',
+                            required: false, message: 'Please input your password!',
                         }],
                     })(
                         <Input className="input" />

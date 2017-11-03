@@ -49,7 +49,7 @@ class ReserveTimeConfig extends React.Component{
             reserveTime:that.state.reserveTime,
         };
         console.log(info);
-        fetch('/restaurant/configInfo', {
+        fetch('/iqesTT/restaurant/configInfo', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -70,7 +70,7 @@ class ReserveTimeConfig extends React.Component{
     //初始化数据
     componentWillMount(){
         const that = this;
-        fetch("/restaurant/configInfo")
+        fetch("/iqesTT/restaurant/configInfo")
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {

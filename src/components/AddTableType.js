@@ -54,6 +54,13 @@ const CreateForm = Form.create()(
                             <Input />
                         )}
                     </FormItem>
+                    <FormItem label="提前推送桌数" {...formItemLayout}>
+                        {getFieldDecorator('pushNumbers', {
+                            rules: [{ required: true, message: '请输入提前推送桌数' }],
+                        })(
+                            <Input />
+                        )}
+                    </FormItem>
                     {/*<FormItem label="提前推送桌数" {...formItemLayout}>*/}
                         {/*{getFieldDecorator('VipPrice', {*/}
                             {/*rules: [{ required: true, message: '请输入提前推送桌数' }],*/}
@@ -84,7 +91,9 @@ export default class AddTableType extends React.Component {
         this.setState({ visible: false });
     }
     handleCreate = () => {
+        console.log(this.props.refersh);
         const form = this.form;
+        const that = this;
         form.validateFields((err, values) => {
             if (err) {
                 return;
@@ -95,10 +104,11 @@ export default class AddTableType extends React.Component {
                 tableTypeName:values.tableTypeName,
                 eatMinNumber:values.eatMinNumber,
                 eatMaxNumber:values.eatMaxNumber,
-                eatTime:values.eatTime
+                eatTime:values.eatTime,
+                pushNumbers:values.pushNumbers
             };
             console.log(addMenu);
-            fetch('/restaurant/tableType', {
+            fetch('/iqesTT/restaurant/tableType', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -109,7 +119,7 @@ export default class AddTableType extends React.Component {
                 return response.json();
             }).then(function () {
                 console.log("保存成功")
-                success();
+                that.props.refersh();
             }).catch(function () {
                 error();
                 console.log('出错了');

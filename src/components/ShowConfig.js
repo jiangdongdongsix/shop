@@ -64,7 +64,7 @@ class ShowConfigForm extends React.Component{
     //初始化数据
     componentWillMount(){
         const that = this;
-        fetch("/restaurant/broadcastMachine")
+        fetch("/iqesTT/restaurant/broadcastMachine")
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
@@ -103,7 +103,7 @@ class ShowConfigForm extends React.Component{
             fontArea:"A"
         };
         console.log(info)
-        fetch('/restaurant/broadcastMachine', {
+        fetch('/iqesTT/restaurant/broadcastMachine', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

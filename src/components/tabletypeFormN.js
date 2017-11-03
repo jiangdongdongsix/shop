@@ -148,7 +148,6 @@ export default class TableTypeForm extends React.Component{
     }
 
     editDone(index, type) {
-        console.log("6666666");
         const { data } = this.state;
         Object.keys(data[index]).forEach((item) => {
             if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
@@ -163,16 +162,12 @@ export default class TableTypeForm extends React.Component{
                     delete data[index][item].status;
                 }
             });
-            console.log("1010101001010");
             this.updateDate(data[index]);
         });
     }
 
 
     updateDate(data){
-        console.log("7777777");
-        console.log(data);
-        console.log(data.pushNumbers);
         const info = {
             id:data.key,
             eatMaxNumber:data.eatMaxNumber.value,
@@ -180,11 +175,11 @@ export default class TableTypeForm extends React.Component{
             eatMinNumber:data.eatMinNumber.value,
             eatTime:data.eatTime.value,
             tableTypeName:data.tableTypeName.value,
-            pushNumbers:10
+            pushNumbers:data.pushNumbers.value
         }
 
         console.log(JSON.stringify(info));
-        fetch("/restaurant/tableType",{
+        fetch("/iqesTT/restaurant/tableType",{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -226,11 +221,11 @@ export default class TableTypeForm extends React.Component{
     }
 
 
-    componentWillMount(){
-        console.log("kaishi");
+    getdata(){
+        console.log("初始化数据");
         const that = this;
         let dataList = [];
-        fetch("/restaurant/tableType/all")
+        fetch("/iqesTT/restaurant/tableType/all")
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
@@ -273,20 +268,21 @@ export default class TableTypeForm extends React.Component{
         });
     }
 
+
+    componentWillMount(){
+        this.getdata();
+    }
+
     confirm(id){
-        let that = this;
-        let flag = (this.state.flag ? false :true);
-        console.log(flag);
-        console.log(id);
-        fetch("/restaurant/tableType?id="+id, {
+        const that = this;
+        fetch("/iqesTT/restaurant/tableType?id="+id, {
             method: 'DELETE'
         }).then(function(response) {
             return response.json();
         }).then(function (jsonData) {
-            console.log(jsonData);
-            console.log('删除成功');
-                // that.setState({flag:flag})
-
+          if(jsonData.ErrorCode ==='0'){
+              that.getdata();
+          }
         }).catch(function () {
             console.log('出错了');
         });
@@ -320,7 +316,7 @@ export default class TableTypeForm extends React.Component{
                         <Col span={22}>
                             <Row>
                                 <Col span={2}>
-                                    <AddTableType/>
+                                    <AddTableType refersh = {this.getdata.bind(this)}/>
                                 </Col>
                                 <Col span={1}></Col>
                                 <Col span={2}>
