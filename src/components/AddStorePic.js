@@ -18,7 +18,6 @@ const CreateForm = Form.create()(
                 onCancel={onCancel}
                 onOk={onCreate}
             >
-            <PicUpload/>
             </Modal>
         );
     }
