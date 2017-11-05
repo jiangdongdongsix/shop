@@ -14,12 +14,12 @@ function cardReducer(state, action) {
 
 function dialogReducer(state, action) {
     switch (action.type) {
-        case 'SHOW_DIALOG':
+        case type.SHOW_DIALOG:
             return {
                 status: true
             }
 
-        case 'CLOSE_DIALOG':
+        case type.CLOSE_DIALOG:
             return {
                 status: false
             }

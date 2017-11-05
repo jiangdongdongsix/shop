@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox,Modal } from 'antd';
+import history from './../history';
 const FormItem = Form.Item;
 const JSEncrypt = require("jsencrypt");
 const publicKey="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCUMTCZwfbRmX3eGl/Qr+uXpwP6fJZDMoo5qp3q" +
@@ -8,7 +9,28 @@ const publicKey="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCUMTCZwfbRmX3eGl/Qr+uXpwP
 
 // must be a string. This is hex string. decimal = 65537
 class NormalLoginForm extends React.Component {
+    state = { visible: false,
+             msg:""}
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+    handleOk = (e) => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    }
+    handleCancel = (e) => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    }
+
     handleSubmit = (e) => {
+        const that = this;
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
@@ -18,7 +40,7 @@ class NormalLoginForm extends React.Component {
                 const encryptoPasswd = encrypt.encrypt(values.password) // 加密明文
                 let info = {"loginName": values.userName,"password":encryptoPasswd,"remember":values.remember};
                 console.log(info);
-                fetch('/shop/login', {
+                fetch('/iqesTT/shop/login', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -29,9 +51,20 @@ class NormalLoginForm extends React.Component {
                     return response.json();
                 }).then(function (jsonData) {
                     console.log(jsonData);
-                    console.log("登录成功");
+                    if(jsonData.errorCode === '0'){
+                        console.log("登录成功");
+                        history.push({
+                            pathname:'/callnumber'
+                        })
+                    }else{
+                        that.setState({
+                            msg: jsonData.errorMessage,
+                        });
+                        that.showModal();
+                        console.log(jsonData.errorMessage);
+                    }
                 }).catch(function () {
-                    console.log('出错了');
+                    console.log('网络连接错误');
                 });
             }
         });
@@ -66,6 +99,14 @@ class NormalLoginForm extends React.Component {
                     <Button  htmlType="submit" className="login-form-button">
                         登录
                     </Button>
+                    <Modal
+                        title="Basic Modal"
+                        visible={this.state.visible}
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
+                    >
+                        <p>{this.state.msg}</p>
+                    </Modal>
                     {/*Or <a href="">register now!</a>*/}
                 </FormItem>
             </Form>

@@ -37,6 +37,8 @@ class EditableCell extends React.Component {
     }
     render() {
         const { value, editable } = this.state;
+        console.log("chulai120000000000000000000000");
+        console.log(editable);
         return (
             <div>
                 {
@@ -77,14 +79,14 @@ export default class TableTypeForm extends React.Component{
 
         this.columns = [{
             title: '桌类型代码',
-            dataIndex: 'describe',
+            dataIndex: 'tableTypeName',
             width: '10%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'describe', text),
+            render: (text, record, index) => this.renderColumns(this.state.data, index, 'tableTypeName', text),
         },{
             title: '桌类型名称',
-            dataIndex: 'tableTypeName',
+            dataIndex: 'describe',
             width: '15%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'tableTypeName', text),
+            render: (text, record, index) => this.renderColumns(this.state.data, index, 'describe', text),
         }, {
             title: '最小用餐人数',
             dataIndex: 'eatMinNumber',
@@ -111,6 +113,8 @@ export default class TableTypeForm extends React.Component{
             render:(text, record, index)=>{
                 const Id = record.key;
                 const { editable } = this.state.data[index].tableTypeName;
+                console.log("editable");
+                console.log(editable);
                 return(
                     <div className="editable-row-operations">
                         {
@@ -140,11 +144,13 @@ export default class TableTypeForm extends React.Component{
     edit(index) {
         console.log(index);
         const { data } = this.state;
+        console.log(data);
         Object.keys(data[index]).forEach((item) => {
+            console.log(data[index][item].editable)
             if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
-                console.log("unnnnnnnnnn");
                 data[index][item].editable = true;
             }
+            console.log(data[index][item].editable)
         });
         this.setState({ data });
     }
@@ -222,7 +228,6 @@ export default class TableTypeForm extends React.Component{
         this.setState({data});
     }
 
-
     getdata(){
         console.log("初始化数据");
         const that = this;
@@ -290,6 +295,8 @@ export default class TableTypeForm extends React.Component{
         });
     }
     showEdit(Id) {
+        console.log("kkkkkkk")
+
         let that = this;
         console.log(that.state.data);
         let len = that.state.data.length;

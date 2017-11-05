@@ -1,12 +1,14 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import history from './../history';
+import { Link } from 'react-router-dom';
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
 
 export default class Side extends React.Component {
     state = {
-        collapsed: false,
+                collapsed: false,
     };
     onCollapse = (collapsed) => {
         console.log(collapsed);
@@ -24,31 +26,45 @@ export default class Side extends React.Component {
                     <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline"  className="sideBgColor">
                         <h2 className="sideColor sideCenter">排队管理客户端</h2>
                         <Menu.Item key="1">
-                            <Icon type="bell" color="red"/>
-                            <span className="sideColor">叫号清桌</span>
+                            <Link to="/callnumber">
+                                <Icon type="bell" color="red"/>
+                                <span className="sideColor">叫号清桌</span>
+                            </Link>
                         </Menu.Item>
+
                         <Menu.Item key="2">
-                            <Icon type="desktop"/>
-                            <span className="sideColor">入场验证</span>
-                        </Menu.Item>
+                            <Link to="/verify">
+                                <Icon type="desktop"/>
+                                <span className="sideColor">入场验证</span>
+                            </Link>
+                        </Menu.Item >
                         <div style={{paddingLeft:"24px"}}>
                             <span>门店信息设置</span>
                         </div>
-                        <Menu.Item key="4">
-                            <Icon type="file" />
-                            <span className="sideColor">基本信息设置</span>
+                        <Menu.Item key="4" >
+                            <Link to="/basicInfo">
+                                <Icon type="file" />
+                                <span className="sideColor">基本信息设置</span>
+                            </Link>
+
                         </Menu.Item>
                         <Menu.Item key="5">
-                            <Icon type="file" />
-                            <span className="sideColor">排队规则设置</span>
+                            <Link to="/tabletype">
+                                <Icon type="file" />
+                                <span className="sideColor">桌类型设置</span>
+                            </Link>
                         </Menu.Item>
                         <Menu.Item key="7">
+                            <Link to="/tableset">
                             <Icon type="file" />
                             <span className="sideColor">门店桌位图及桌信息设置</span>
+                            </Link>
                         </Menu.Item>
                         <Menu.Item key="8">
+                            <Link to="/menu">
                             <Icon type="file" />
                             <span className="sideColor">菜单信息上传更新</span>
+                            </Link>
                         </Menu.Item>
                     </Menu>
                 </Sider>
