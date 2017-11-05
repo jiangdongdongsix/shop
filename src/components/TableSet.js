@@ -2,6 +2,7 @@ import React from 'react';
 import { Table,Layout,Button,Row,Col,Input,Switch,Popconfirm,Icon,message } from 'antd';
 import HeaderCustom from './HeaderCustom'
 import AddTable from './AddTable'
+import AddStorePic from './AddStorePic'
 import './../styles/menu.css'
 const {Content} = Layout;
 const Search = Input.Search;
@@ -299,9 +300,7 @@ export default class TableTypeForm extends React.Component{
                             </Row>
                             <Row>
                                 <Col span={12}>
-                                    <Button type="danger" icon="file-add" onClick={this.showModal}>
-                                        <span style={{color:"white"}}>导入门店图</span>
-                                    </Button>
+                                    <AddStorePic/>
                                 </Col>
                                 <Col span={12}>
                                     <span className="Table-info">*导入的图中带有桌类型以及桌信息</span>
