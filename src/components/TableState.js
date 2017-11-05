@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table,Layout,Button,Row,Col,Input,Switch,Popconfirm,Icon,message } from 'antd';
 import './../styles/menu.css'
+import AreaTableInfo from './AreaTableInfo'
 const {Content} = Layout;
 const Search = Input.Search;
 
@@ -9,14 +10,11 @@ export default class TableState extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            visible: false,
             data:[{
-                id: "",
-                name: "",
-                Price: "",
-                props: "",
-                VipPrice: "",
-                describe: ""
+                tableName: "",
+                area: "",
+                state: "",
+                tableTypeDescribe: ""
             }]
         };
         this.confirm = this.confirm.bind(this);
@@ -33,23 +31,31 @@ export default class TableState extends React.Component{
             width:'0'
         },{
             title: '状态',
-            dataIndex: 'name',
-            width: '15%'
+            dataIndex: 'state',
+            width: '15%',
+            render:()=> {
+                return (
+                    <span>
+                       <Icon type="smile" />
+                        <span>就餐中</span>
+                    </span>
+                )
+            }
         }, {
             title: '桌编号',
-            dataIndex: 'props',
+            dataIndex: 'tableName',
             width: '15%'
         }, {
             title: '所在区域',
-            dataIndex: 'Price',
+            dataIndex: 'area',
             width: '13%'
         },{
             title: '桌类型',
-            dataIndex: 'VipPrice',
+            dataIndex: 'tableTypeDescribe',
             width: '13%'
         },{
             title: '已排桌数',
-            dataIndex: 'describe',
+            dataIndex: 'tableNumber',
             width: '13%'
         }, {
             title: "设置为空桌",
@@ -71,7 +77,7 @@ export default class TableState extends React.Component{
                 const Id = record.id;
                 return(
                     <span>
-                        <Icon type="notification" className="Menu-operation" onClick={this.showEdit.bind(this,Id)}/>
+                        <Icon type="notification" className="Menu-operation" />
                     </span>
                 )
             }
@@ -79,24 +85,22 @@ export default class TableState extends React.Component{
     }
     componentDidMount(){
         let that = this;
-        fetch("/iqesTT/restaurant/menu/menus")
+        fetch("/iqesTT/restaurant/tableNumber/all")
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
             console.log(jsonData);
-            let len = jsonData.menus.length;
-            let menuInfo = [];
+            let len = jsonData.tableNumbers.length;
+            let tableInfo = [];
             for(let i=0;i<len;i++) {
-                menuInfo.push({
-                    id:jsonData.menus[i].id,
-                    name:jsonData.menus[i].menuName,
-                    Price:jsonData.menus[i].menuPrice,
-                    props:jsonData.menus[i].menuType,
-                    VipPrice:jsonData.menus[i].memberMenuPrice,
-                    describe:jsonData.menus[i].describe
+                tableInfo.push({
+                    tableName: jsonData.tableNumbers[i].tableName,
+                    area: jsonData.tableNumbers[i].area,
+                    tableTypeDescribe: jsonData.tableNumbers[i].tableTypeDescribe,
+                    tableNumber: '3'
                 })
             }
-            that.setState({data:menuInfo});
+            that.setState({data:tableInfo});
         }).catch(function () {
             console.log('出错了');
         });
@@ -138,31 +142,7 @@ export default class TableState extends React.Component{
                     <Row>
                         <Col span={24}>
                             <Row>
-                                <Col span={2} style={{paddingTop:"5px"}}>
-                                    区域桌信息:
-                                </Col>
-                                <Col span={2}>
-                                    <Button type="primary" style={{padding:"0 10px"}}>
-                                        <span style={{color:"white"}}>A区 空一桌</span>
-                                    </Button>
-                                </Col>
-                                <Col span={2}>
-                                    <Button type="primary" style={{padding:"0 10px"}}>
-                                        <span style={{color:"white"}}>B区 空一桌</span>
-                                    </Button>
-                                </Col>
-                                <Col span={2}>
-                                    <Button type="primary" style={{padding:"0 10px"}}>
-                                        <span style={{color:"white"}}>C区 空一桌</span>
-                                    </Button>
-                                </Col>
-                                <Col span={2}>
-                                    <Button type="primary" style={{padding:"0 10px"}}>
-                                        <span style={{color:"white"}}>D区 空一桌</span>
-                                    </Button>
-                                </Col>
-                                <Col span={10}></Col>
-                                <Col span={4} style={{paddingTop:"8px",color:"orange",fontSize:"12px"}}>*当前显示为全部区域桌信息</Col>
+                                <AreaTableInfo/>
                             </Row>
                             <Row>
                                 <div className="Menu-table">

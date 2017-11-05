@@ -77,24 +77,24 @@ export default class TableTypeForm extends React.Component{
 
         this.columns = [{
             title: '菜品名称',
-            dataIndex: 'name',
+            dataIndex: 'menuName',
             width: '15%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'name', text),
+            render: (text, record, index) => this.renderColumns(this.state.data, index, 'menuName', text),
         }, {
             title: '菜品属性',
-            dataIndex: 'props',
+            dataIndex: 'menuType',
             width: '15%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'props', text),
+            render: (text, record, index) => this.renderColumns(this.state.data, index, 'menuType', text),
         }, {
             title: '价格',
-            dataIndex: 'Price',
+            dataIndex: 'menuPrice',
             width: '13%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'Price', text),
+            render: (text, record, index) => this.renderColumns(this.state.data, index, 'menuPrice', text),
         },{
             title: '会员价格',
-            dataIndex: 'VipPrice',
+            dataIndex: 'memberMenuPrice',
             width: '13%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'VipPrice', text),
+            render: (text, record, index) => this.renderColumns(this.state.data, index, 'memberMenuPrice', text),
         },{
             title: '描述',
             dataIndex: 'describe',
@@ -105,23 +105,23 @@ export default class TableTypeForm extends React.Component{
             dataIndex: 'operation',
             render:(text, record, index)=>{
                 const Id = record.key;
-                const { editable } = this.state.data[index].name;
+                const { editable } = this.state.data[index].menuName;
                 return(
                     <div className="editable-row-operations">
                         {
                             editable ?
                                 <span>
-                               <a onClick={() => this.editDone(index, 'save')}>保存</a>
+                                    <a onClick={() => this.editDone(index, 'save')}>保存</a>
                                     <a onClick={() => this.editDone(index, 'cancel')} style={{marginLeft: 20}}>取消</a>
-                            </span>
+                                </span>
                                 :
                                 <span>
-                            <Switch defaultChecked={true} onChange={this.handleChange.bind(this,Id)}/>
-                            <Icon type="edit" className="Menu-operation" onClick={() => this.edit(index)}/>
-                            <Popconfirm title="确定删除?"  onConfirm={this.confirm.bind(this,Id)} onCancel={cancel}>
-                            <Icon type="delete" className="Menu-operation"/>
-                            </Popconfirm>
-                            </span>
+                                    <Switch defaultChecked={true} onChange={this.handleChange.bind(this,Id)}/>
+                                    <Icon type="edit" className="Menu-operation" onClick={() => this.edit(index)}/>
+                                    <Popconfirm title="确定删除?"  onConfirm={this.confirm.bind(this,Id)} onCancel={cancel}>
+                                    <Icon type="delete" className="Menu-operation"/>
+                                    </Popconfirm>
+                                </span>
                         }
                     </div>
                 )
@@ -135,7 +135,6 @@ export default class TableTypeForm extends React.Component{
         const { data } = this.state;
         Object.keys(data[index]).forEach((item) => {
             if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
-                console.log("nnnnnnnnnnn");
                 data[index][item].editable = true;
             }
         });
@@ -165,10 +164,10 @@ export default class TableTypeForm extends React.Component{
     updateDate(data){
         const info = {
             id:data.key,
-            name:data.name.value,
-            props:data.props.value,
-            Price:data.Price.value,
-            VipPrice:data.VipPrice.value,
+            menuName:data.menuName.value,
+            menuType:data.menuType.value,
+            menuPrice:data.menuPrice.value,
+            memberMenuPrice:data.memberMenuPrice.value,
             describe:data.describe.value
         }
         console.log(JSON.stringify(info));
@@ -188,15 +187,15 @@ export default class TableTypeForm extends React.Component{
             // error();
             console.log('出错了');
         });
-
     }
 
 
     renderColumns(data, index, key, text) {
+        const { editable, status } = data[index][key];
         if (typeof editable === 'undefined') {
             return text;
         }
-        const { editable, status } = data[index][key];
+
         return (
             <EditableCell
                 editable={editable}
@@ -229,19 +228,19 @@ export default class TableTypeForm extends React.Component{
             jsonData.menus.map((k,index) =>{
                 let obj ={
                     key: k.id,
-                    name:  {
+                    menuName:  {
                         editable: false,
                         value: k.menuName,
                     },
-                    Price: {
+                    menuPrice: {
                         editable: false,
                         value: k.menuPrice,
                     },
-                    props: {
+                    menuType: {
                         editable: false,
                         value: k.menuType,
                     },
-                    VipPrice:{
+                    memberMenuPrice:{
                         editable: false,
                         value: k.memberMenuPrice,
                     },
@@ -279,6 +278,7 @@ export default class TableTypeForm extends React.Component{
             console.log('出错了');
         });
     }
+
     showEdit(Id) {
         let that = this;
         console.log(that.state.data);

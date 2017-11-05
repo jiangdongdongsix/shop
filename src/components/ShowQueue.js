@@ -48,109 +48,115 @@ const CreateTable = Form.create()(
 );
 
 export default class CallClear extends React.Component{
-    state = {
-        visible: false,
-    };
-    showModal = () => {
+    constructor() {
+        super();
+        this.state = {
+            visible: false,
+            Info:[
+                {
+                    arrivingQueueInfoList: [],
+                    eatMaxNumber:'8',
+                    eatMinNumber:'4',
+                    queueNumbers:'3',
+                    tableTypeDescribe:"B"
+                }
+            ]
+        };
+    }
+    showModal = (event) => {
+        let that = this;
+        console.log(event);
+        console.log(that.state.Info.tableTypeDescribe);
         this.setState({ visible: true });
+        fetch('/queue/tableTypeDescribe', {
+        }).then(function(response) {
+            console.log(response);
+            return response.json();
+        }).then(function () {
+            console.log("保存成功");
+        }).catch(function () {
+            console.log('出错了');
+        });
     };
     handleCancel = () => {
         this.setState({ visible: false });
     };
+
+    handleQueueInfo(){
+        let that = this;
+        fetch('/iqesTT/restaurant/tableType/queue').then(function(response) {
+            return response.json();
+        }).then(function (jsonData) {
+            console.log(jsonData);
+            let len = jsonData.tableTypeDTOs.length;
+            console.log(len);
+            let queueInfo = [];
+            for(var i=0;i<len;i++){
+                queueInfo.push({
+                        tableTypeDescribe:jsonData.tableTypeDTOs[i].tableTypeDescribe,
+                        eatMaxNumber: jsonData.tableTypeDTOs[i].eatMaxNumber,
+                        eatMinNumber: jsonData.tableTypeDTOs[i].eatMinNumber,
+                        queueNumbers: jsonData.tableTypeDTOs[i].queueNumbers,
+                        arrivingQueueInfoList:'A101'
+                });
+            }
+            that.setState({Info:queueInfo});
+        }).catch(function () {
+            console.log('查看排队失败');
+        });
+    }
+
+
+    componentWillMount(){
+        this.handleQueueInfo();
+    }
+
     render(){
+        const queueElements=[];      //保存渲染以后 JSX的数组
+        for(let queue of this.state.Info){
+            queueElements.push(
+                <div>
+                    <Col span={6}>
+                        <div className="queuePanel">
+                            <Row>
+                                <Col span={1}></Col>
+                                <Col span={23}>{queue.tableTypeDescribe}({queue.eatMinNumber}-{queue.eatMaxNumber}人)</Col>
+                            </Row>
+                            <Row style={{padding:"10px 0px 7px 0px"}}>
+                                <Col span={2}></Col>
+                                <Col span={10}>
+                                    <img src={TableQueue} alt="" style={{width:"50%",height:"50%"}}/>
+                                </Col>
+                                <Col span={10}>
+                                    <div>
+                                        <h3>已排{queue.queueNumbers}桌</h3>
+                                        <p>即将叫号{queue.arrivingQueueInfoList}</p>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={24}>
+                                    <p className="queueIcon" onClick={this.showModal.bind(this)}>
+                                        <Icon type="search" />查看队列
+                                    </p>
+                                </Col>
+                            </Row>
+                        </div>
+                    </Col>
+                    <Col span={1}></Col>
+                </div>)
+        }
         return (
             <Layout style={{backgroundColor:'white',padding:"20px 0px"}}>
                 <Content>
                     <Row>
-                        <Col span={6}>
-                            <div className="queuePanel">
-                                <Row>
-                                    <Col span={1}></Col>
-                                    <Col span={23}>小桌(5-6人)</Col>
-                                </Row>
-                                <Row style={{padding:"10px 0px 7px 0px"}}>
-                                    <Col span={2}></Col>
-                                    <Col span={10}>
-                                        <img src={TableQueue} alt="" style={{width:"50%",height:"50%"}}/>
-                                    </Col>
-                                    <Col span={10}>
-                                        <div>
-                                            <h3>已排10桌</h3>
-                                            <p>即将叫号A101</p>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col span={24}>
-                                        <p className="queueIcon" onClick={this.showModal}>
-                                            <Icon type="search" />查看队列
-                                        </p>
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Col>
-                        <Col span={1}></Col>
-                        <Col span={6}>
-                            <div className="queuePanel">
-                                <Row>
-                                    <Col span={1}></Col>
-                                    <Col span={23}>小桌(5-6人)</Col>
-                                </Row>
-                                <Row style={{padding:"10px 0px 7px 0px"}}>
-                                    <Col span={2}></Col>
-                                    <Col span={10}>
-                                        <img src={TableQueue} alt="" style={{width:"50%",height:"50%"}}/>
-                                    </Col>
-                                    <Col span={10}>
-                                        <div>
-                                            <h3>已排10桌</h3>
-                                            <p>即将叫号A101</p>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col span={24}>
-                                        <p className="queueIcon" onClick={this.showModal}>
-                                            <Icon type="search" />查看队列
-                                        </p>
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Col>
-                        <Col span={1}></Col>
-                        <Col span={6}>
-                            <div className="queuePanel">
-                                <Row>
-                                    <Col span={1}></Col>
-                                    <Col span={23}>小桌(5-6人)</Col>
-                                </Row>
-                                <Row style={{padding:"10px 0px 7px 0px"}}>
-                                    <Col span={2}></Col>
-                                    <Col span={10}>
-                                        <img src={TableQueue} alt="" style={{width:"50%",height:"50%"}}/>
-                                    </Col>
-                                    <Col span={10}>
-                                        <div>
-                                            <h3>已排10桌</h3>
-                                            <p>即将叫号A101</p>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col span={24}>
-                                        <p className="queueIcon" onClick={this.showModal}>
-                                            <Icon type="search" />查看队列
-                                        </p>
-                                        <CreateTable
-                                            ref={this.saveFormRef}
-                                            visible={this.state.visible}
-                                            onCancel={this.handleCancel}
-                                            onCreate={this.handleCreate}
-                                        />
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Col>
+                        {queueElements}
+                        <CreateTable
+                            ref={this.saveFormRef}
+                            visible={this.state.visible}
+                            onCancel={this.handleCancel}
+                            onCreate={this.handleCreate}
+                        />
                     </Row>
                 </Content>
             </Layout>
