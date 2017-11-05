@@ -27,9 +27,9 @@ export default class Verify extends React.Component{
                 return response.json();
             }).then(function (jsonData) {
             console.log(jsonData);
-            that.props.onChange(jsonData.extractFlag);
+            that.props.onChange(jsonData);
             if(jsonData.extractFlag == '1'){
-                fetch('/queue?qid='+ jsonData.queueInfo.queueId, {
+                fetch('/iqesTT/queue?qid='+ jsonData.queueInfo.queueId, {
                     method: 'DELETE',}).then(function(response) {
                     return response.json();
                 }).then(function (jsonData) {
