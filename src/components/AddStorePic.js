@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button,Input,Modal,Form,Upload } from 'antd';
+import { Button,Input,Modal,Form,Upload,Icon } from 'antd';
 import './../styles/menu.css'
-import PicUpload from './PicUpload'
 const FormItem = Form.Item;
 const CreateForm = Form.create()(
     (props) => {
@@ -33,69 +32,52 @@ const error = () => {
 };
 export default class AddMenu extends React.Component {
     state = {
-        visible: false,
-    };
-    showModal = () => {
-        this.setState({ visible: true });
-    };
-    handleCancel = () => {
-        this.setState({ visible: false });
+        fileList: [{
+            uid: -1,
+            name: 'xxx.png',
+            status: 'done',
+            url: 'http://www.baidu.com/xxx.png',
+        }],
+    }
+    handleChange = (info) => {
+        let fileList = info.fileList;
+
+        // 1. Limit the number of uploaded files
+        //    Only to show two recent uploaded files, and old ones will be replaced by the new
+        fileList = fileList.slice(-2);
+
+        // 2. read from response and show file link
+        fileList = fileList.map((file) => {
+            if (file.response) {
+                // Component will show file.url as link
+                file.url = file.response.url;
+            }
+            return file;
+        });
+
+        // 3. filter successfully uploaded files according to response from server
+        fileList = fileList.filter((file) => {
+            if (file.response) {
+                return file.response.status === 'success';
+            }
+            return true;
+        });
+
+        this.setState({ fileList });
     };
 
-    handleCreate = () => {
-        const that = this;
-        const form = this.form;
-        form.validateFields((err, values) => {
-            if (err) {
-                return;
-            }
-            console.log('Received values of form: ', values);
-            let addMenu = {
-                menuName:values.name,
-                menuPrice:values.Price,
-                menuType:values.props,
-                memberMenuPrice:values.VipPrice,
-                describe:values.describe
-            };
-            fetch('/iqesTT/restaurant/menu', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(addMenu)
-            }).then(function(response) {
-                console.log(addMenu);
-                console.log(response);
-                return response.json();
-            }).then(function () {
-                console.log("保存成功");
-                that.props.refersh();
-                success();
-            }).catch(function () {
-                error();
-                console.log('出错了');
-            });
-            form.resetFields();
-            this.setState({ visible: false });
-        });
-    }
-    saveFormRef = (form) => {
-        this.form = form;
-    }
     render() {
-        return (
-            <div>
-                <Button type="danger" icon="file-add" onClick={this.showModal}>
-                    <span style={{color:"white"}}>导入门店图</span>
+        const props = {
+            action: '/iqesTT/restaurant/seatingChart',
+            onChange: this.handleChange,
+            multiple: true,
+        };
+            return (
+            <Upload {...props} fileList={this.state.fileList}>
+                <Button type='danger'>
+                    <Icon type="upload"/> <span style={{color:'white'}}>导入门店图</span>
                 </Button>
-                <CreateForm
-                    ref={this.saveFormRef}
-                    visible={this.state.visible}
-                    onCancel={this.handleCancel}
-                    onCreate={this.handleCreate}
-                />
-            </div>
-        );
-    }
+            </Upload>
+            );
+};
 }

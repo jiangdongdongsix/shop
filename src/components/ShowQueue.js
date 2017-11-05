@@ -55,34 +55,38 @@ export default class CallClear extends React.Component{
             Info:[
                 {
                     arrivingQueueInfoList: [],
-                    eatMaxNumber:'8',
-                    eatMinNumber:'4',
-                    queueNumbers:'3',
-                    tableTypeDescribe:"B"
+                    eatMaxNumber:'',
+                    eatMinNumber:'',
+                    queueNumbers:'',
+                    tableTypeDescribe:""
                 }
             ]
         };
     }
-    showModal = () => {
+    showModal = (event) => {
+        fetch('/iqesTT/queue/tableTypeDescribe?tableTypeDescribe='+'中桌', {
+        }).then(function(response) {
+            console.log(response);
+            return response.json();
+        }).then(function(jsonData) {
+            console.log(jsonData);
+            let len = jsonData.queueInfos.length;
+            let queueInfo = [];
+            for(let i=0;i<len;i++){
+                queueInfo.push({
+
+                })
+            }
+            console.log("保存成功");
+        }).catch(function () {
+            console.log('出错了');
+        });
         this.setState(
             {
                 visible: true
 
             }
         );
-        console.log(this.state.Info);
-        fetch('/iqesTT/queue/tableTypeDescribe?tableTypeDescribe='+'大桌', {
-        }).then(function(response) {
-            console.log(response);
-            return response.json();
-        }).then(function(jsonData) {
-            console.log(111);
-            console.log(jsonData);
-            console.log("保存成功");
-        }).catch(function () {
-            console.log('出错了');
-        });
-
     };
     handleCancel = () => {
         this.setState({ visible: false });
@@ -97,7 +101,7 @@ export default class CallClear extends React.Component{
             let len = jsonData.tableTypeDTOs.length;
             console.log(len);
             let queueInfo = [];
-            for(var i=0;i<len;i++){
+            for(let i=0;i<len;i++){
                 queueInfo.push({
                         tableTypeDescribe:jsonData.tableTypeDTOs[i].tableTypeDescribe,
                         eatMaxNumber: jsonData.tableTypeDTOs[i].eatMaxNumber,
