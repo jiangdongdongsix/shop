@@ -63,20 +63,26 @@ export default class CallClear extends React.Component{
             ]
         };
     }
-    showModal = (event) => {
-        let that = this;
-        console.log(event);
-        console.log(that.state.Info.tableTypeDescribe);
-        this.setState({ visible: true });
-        fetch('/queue/tableTypeDescribe', {
+    showModal = () => {
+        this.setState(
+            {
+                visible: true
+
+            }
+        );
+        console.log(this.state.Info);
+        fetch('/iqesTT/queue/tableTypeDescribe?tableTypeDescribe='+'大桌', {
         }).then(function(response) {
             console.log(response);
             return response.json();
-        }).then(function () {
+        }).then(function(jsonData) {
+            console.log(111);
+            console.log(jsonData);
             console.log("保存成功");
         }).catch(function () {
             console.log('出错了');
         });
+
     };
     handleCancel = () => {
         this.setState({ visible: false });
