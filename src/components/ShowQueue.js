@@ -1,9 +1,9 @@
 import React from 'react';
 import { Layout,Icon,Button,Row,Col,Input,Form,Modal,Table } from 'antd';
 import TableQueue from '../images/chouhao_pic.png';
+import ShowTableQueue from './ShowTableQueue'
 import '../styles/showqueue.css'
 const { Content,} = Layout;
-const FormItem = Form.Item;
 
 const columns = [{
     title: '排队号',
@@ -29,7 +29,7 @@ const columns = [{
     title: "联系方式",
     dataIndex: '',
     width: '15%'
-}]
+}];
 const CreateTable = Form.create()(
     (props) => {
         const { visible, onCancel, onCreate, form } = props;
@@ -41,7 +41,7 @@ const CreateTable = Form.create()(
                 onOk={onCreate}
                 footer={null}
             >
-                <Table columns={columns} />
+                <ShowTableQueue/>
             </Modal>
         );
     }
@@ -60,33 +60,45 @@ export default class CallClear extends React.Component{
                     queueNumbers:'',
                     tableTypeDescribe:""
                 }
-            ]
+            ],
+            queueInfo:[]
         };
     }
-    showModal = (event) => {
-        fetch('/iqesTT/queue/tableTypeDescribe?tableTypeDescribe='+'中桌', {
-        }).then(function(response) {
-            console.log(response);
-            return response.json();
-        }).then(function(jsonData) {
-            console.log(jsonData);
-            let len = jsonData.queueInfos.length;
-            let queueInfo = [];
-            for(let i=0;i<len;i++){
-                queueInfo.push({
-
-                })
-            }
-            console.log("保存成功");
-        }).catch(function () {
-            console.log('出错了');
-        });
+    showModal = () => {
         this.setState(
             {
                 visible: true
-
             }
         );
+    };
+    getData = ()=>{
+        const that =this;
+        fetch('/iqesTT/queue/tableTypeDescribe?tableTypeDescribe='+'小桌', {
+        }).then(function(response) {
+            return response.json();
+        }).then(function(jsonData) {
+            let info = [];
+            console.log(jsonData);
+            jsonData.queueInfos.map((k,index) => {
+                let obj = {
+                    queueId:k.queueId,
+                    eatNumber:k.eatNumber,
+                    seatFlag:k.seatFlag,
+                    queueStartTime:k.queueStartTime,
+                    customerName:k.customerName,
+                    customerTel:k.customerTel,
+                };
+                console.log(obj);
+                info.push(obj);
+                console.log(info);
+            });
+
+            that.setState({
+                queueInfo: info,
+            })
+        }).catch(function () {
+            console.log('出错了');
+        });
     };
     handleCancel = () => {
         this.setState({ visible: false });
@@ -162,7 +174,7 @@ export default class CallClear extends React.Component{
                     <Row>
                         {queueElements}
                         <CreateTable
-                            ref={this.saveFormRef}
+                            refersh = {this.getData.bind(this)}
                             visible={this.state.visible}
                             onCancel={this.handleCancel}
                             onCreate={this.handleCreate}

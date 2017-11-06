@@ -1,9 +1,8 @@
 import React from 'react';
-import { Table,Layout,Button,Row,Col,Input,Switch,Popconfirm,Icon,message } from 'antd';
+import { Table,Layout,Button,Row,Col,Icon,message } from 'antd';
 import './../styles/menu.css'
 import AreaTableInfo from './AreaTableInfo'
 const {Content} = Layout;
-const Search = Input.Search;
 
 
 export default class TableState extends React.Component{
@@ -17,14 +16,7 @@ export default class TableState extends React.Component{
                 tableTypeDescribe: ""
             }]
         };
-        this.confirm = this.confirm.bind(this);
-        this.showEdit = this.showEdit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        function cancel(e){
-            console.log(e);
-            message.error('取消删除');
-        };
-
         this.columns = [{
             title:'',
             dataIndex:'key',
@@ -32,15 +24,7 @@ export default class TableState extends React.Component{
         },{
             title: '状态',
             dataIndex: 'state',
-            width: '15%',
-            render:()=> {
-                return (
-                    <span>
-                       <Icon type="smile" />
-                        <span>就餐中</span>
-                    </span>
-                )
-            }
+            width: '15%'
         }, {
             title: '桌编号',
             dataIndex: 'tableName',
@@ -65,7 +49,7 @@ export default class TableState extends React.Component{
                 const Id = record.id;
                 return (
                     <span>
-                        <Button>设为空桌</Button>
+                        <Button onClick={this.handleChange.bind(this)}>设为空桌</Button>
                     </span>
                 )
             }
@@ -93,7 +77,13 @@ export default class TableState extends React.Component{
             let len = jsonData.tableNumbers.length;
             let tableInfo = [];
             for(let i=0;i<len;i++) {
+                if(jsonData.tableNumbers[i].state === '0'){
+                    jsonData.tableNumbers[i].state = '就餐中';
+                }else if(jsonData.tableNumbers[i].state === '1'){
+                    jsonData.tableNumbers[i].state = '空闲中';
+                }
                 tableInfo.push({
+                    state:jsonData.tableNumbers[i].state,
                     tableName: jsonData.tableNumbers[i].tableName,
                     area: jsonData.tableNumbers[i].area,
                     tableTypeDescribe: jsonData.tableNumbers[i].tableTypeDescribe,
@@ -105,35 +95,10 @@ export default class TableState extends React.Component{
             console.log('出错了');
         });
     }
-    confirm(id){
-        let that = this;
-        console.log(id);
-        fetch("/iqesTT/restaurant/menu?id="+id, {
-            method: 'DELETE'
-        }).then(function(response) {
-            return response.json();
-        }).then(function (jsonData) {
-            if(jsonData.ErrorCode == 0){
-                console.log('删除成功');
-            }
-            console.log(that.state.data);
-        }).catch(function () {
-            console.log('出错了');
-        });
-    };
-    showEdit(Id) {
-        let that = this;
-        console.log(that.state.data);
-        let len = that.state.data.length;
-        for (let i = 0; i < len; i++) {
-            if (that.state.data[i].id == Id) {
-                console.log(that.state.data[i]);
-            }
-        }
-    }
 
-    handleChange(Id){
-        console.log(Id);
+    handleChange(){
+        console.log(111);
+        console.log(this.state.data);
     }
     render(){
         return (
