@@ -265,6 +265,7 @@ export default class TableTypeForm extends React.Component{
     }
 
     confirm(id){
+        console.log(id);
         const that = this;
         fetch("/iqesTT/restaurant/menu?id="+id, {
             method: 'DELETE'

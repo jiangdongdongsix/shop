@@ -30,22 +30,7 @@ const columns = [{
     dataIndex: '',
     width: '15%'
 }];
-const CreateTable = Form.create()(
-    (props) => {
-        const { visible, onCancel, onCreate, form } = props;
-        return (
-            <Modal
-                visible={visible}
-                title="队列信息"
-                onCancel={onCancel}
-                onOk={onCreate}
-                footer={null}
-            >
-                <ShowTableQueue/>
-            </Modal>
-        );
-    }
-);
+
 
 export default class CallClear extends React.Component{
     constructor() {
@@ -61,14 +46,23 @@ export default class CallClear extends React.Component{
                     tableTypeDescribe:""
                 }
             ],
-            queueInfo:[]
+            queueInfo:[],
+            tableTypeDescribe:''
         };
     }
-    showModal = () => {
-        this.setState({visible: true});
+
+    showModal = (tableTypeDescribe) => {
+        console.log(tableTypeDescribe);
+        this.setState({
+            visible: true,
+            tableTypeDescribe:tableTypeDescribe
+        });
     };
     handleCancel = () => {
-        this.setState({ visible: false });
+        this.setState({
+            visible: false,
+            tableTypeDescribe:''
+        });
     };
 
     handleQueueInfo(){
@@ -98,6 +92,9 @@ export default class CallClear extends React.Component{
     componentWillMount(){
         this.handleQueueInfo();
     }
+    saveFormRef = (form) => {
+        this.form = form;
+    }
 
     render(){
         const queueElements=[];      //保存渲染以后 JSX的数组
@@ -124,7 +121,7 @@ export default class CallClear extends React.Component{
                             </Row>
                             <Row>
                                 <Col span={24}>
-                                    <p className="queueIcon" onClick={this.showModal.bind(this)}>
+                                    <p className="queueIcon" onClick={this.showModal.bind(this,queue.tableTypeDescribe)}>
                                         <Icon type="search" />查看队列
                                     </p>
                                 </Col>
@@ -134,13 +131,31 @@ export default class CallClear extends React.Component{
                     <Col span={1}></Col>
                 </div>)
         }
+        const CreateTable = Form.create()(
+            (props) => {
+                const { visible, onCancel, onCreate,tableTypeDescribe } = props;
+                return (
+                    <Modal
+                        visible={visible}
+                        title="队列信息"
+                        onCancel={onCancel}
+                        onOk={onCreate}
+                        footer={null}
+                    >
+                        <ShowTableQueue tableTypeDescribe={tableTypeDescribe}/>
+                    </Modal>
+                );
+            }
+        );
         return (
             <Layout style={{backgroundColor:'white',padding:"20px 0px"}}>
                 <Content>
                     <Row>
                         {queueElements}
                         <CreateTable
+                            ref={this.saveFormRef}
                             visible={this.state.visible}
+                            tableTypeDescribe={this.state.tableTypeDescribe}
                             onCancel={this.handleCancel}
                             onCreate={this.handleCreate}
                         />

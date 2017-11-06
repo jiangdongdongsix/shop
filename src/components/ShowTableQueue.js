@@ -28,13 +28,18 @@ const columns = [{
 }];
 
 export default class ShowTableQueue extends React.Component {
-    state = {
-        visible: false,
-        queueInfo:[]
-    };
-    showTable = () => {
+    constructor(props){
+        super(props);
+        this.state = {
+            visible: false,
+            queueInfo:[],
+            tableTypeDescribe:''
+        };
+    }
+    showTable = (tableTypeDescribe) => {
         const that =this;
-        fetch('/iqesTT/queue/tableTypeDescribe?tableTypeDescribe='+'小桌', {
+        console.log(that.props.tableTypeDescribe);
+        fetch('/iqesTT/queue/tableTypeDescribe?tableTypeDescribe='+tableTypeDescribe, {
         }).then(function(response) {
             return response.json();
         }).then(function(jsonData) {
@@ -58,11 +63,13 @@ export default class ShowTableQueue extends React.Component {
     };
 
     componentWillMount(){
-        this.showTable();
+        const tableTypeDescribe = this.props.tableTypeDescribe;
+        this.showTable(tableTypeDescribe);
     }
+
     render() {
         return (
-            <Table columns={columns} dataSource={this.state.queueInfo}/>
+            <Table columns={columns} dataSource={this.state.queueInfo} />
         );
     }
 }
