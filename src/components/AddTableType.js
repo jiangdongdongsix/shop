@@ -20,14 +20,14 @@ const CreateForm = Form.create()(
             >
                 <Form layout='horizontal'>
                     <FormItem label="桌类型代码" {...formItemLayout}>
-                        {getFieldDecorator('describe', {
+                        {getFieldDecorator('tableTypeName', {
                             rules: [{ required: true, message: '请输入桌类型代码' }],
                         })(
                             <Input />
                         )}
                     </FormItem>
                     <FormItem label="桌类型名称" {...formItemLayout}>
-                        {getFieldDecorator('tableTypeName', {
+                        {getFieldDecorator('describe', {
                             rules: [{ required: true, message: '请输入桌类型名称' }],
                         })(
                             <Input />

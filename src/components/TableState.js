@@ -98,7 +98,6 @@ export default class TableState extends React.Component{
 
     handleChange(){
         console.log(111);
-        console.log(this.state.data);
     }
     render(){
         return (
@@ -111,7 +110,7 @@ export default class TableState extends React.Component{
                             </Row>
                             <Row>
                                 <div className="Menu-table">
-                                    <Table columns={this.columns} dataSource={this.state.data} onChange={this.handleChange} />
+                                    <Table columns={this.columns} dataSource={this.state.data} />
                                 </div>
                             </Row>
                         </Col>

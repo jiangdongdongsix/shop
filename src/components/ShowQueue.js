@@ -65,40 +65,7 @@ export default class CallClear extends React.Component{
         };
     }
     showModal = () => {
-        this.setState(
-            {
-                visible: true
-            }
-        );
-    };
-    getData = ()=>{
-        const that =this;
-        fetch('/iqesTT/queue/tableTypeDescribe?tableTypeDescribe='+'小桌', {
-        }).then(function(response) {
-            return response.json();
-        }).then(function(jsonData) {
-            let info = [];
-            console.log(jsonData);
-            jsonData.queueInfos.map((k,index) => {
-                let obj = {
-                    queueId:k.queueId,
-                    eatNumber:k.eatNumber,
-                    seatFlag:k.seatFlag,
-                    queueStartTime:k.queueStartTime,
-                    customerName:k.customerName,
-                    customerTel:k.customerTel,
-                };
-                console.log(obj);
-                info.push(obj);
-                console.log(info);
-            });
-
-            that.setState({
-                queueInfo: info,
-            })
-        }).catch(function () {
-            console.log('出错了');
-        });
+        this.setState({visible: true});
     };
     handleCancel = () => {
         this.setState({ visible: false });
@@ -174,7 +141,6 @@ export default class CallClear extends React.Component{
                     <Row>
                         {queueElements}
                         <CreateTable
-                            refersh = {this.getData.bind(this)}
                             visible={this.state.visible}
                             onCancel={this.handleCancel}
                             onCreate={this.handleCreate}

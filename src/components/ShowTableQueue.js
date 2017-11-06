@@ -42,6 +42,7 @@ export default class ShowTableQueue extends React.Component {
             let info = [];
             console.log(jsonData);
             jsonData.queueInfos.map((k,index) => {
+                console.log(k.id);
                 let obj = {
                     queueId:k.queueId,
                     eatNumber:k.eatNumber,
