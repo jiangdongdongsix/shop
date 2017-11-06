@@ -78,7 +78,6 @@ export default class CallClear extends React.Component{
         }).then(function (jsonData) {
             console.log(jsonData);
             let len = jsonData.tableTypeDTOs.length;
-            console.log(len);
             let queueInfo = [];
             for(let i=0;i<len;i++){
                 queueInfo.push({

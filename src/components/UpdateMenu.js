@@ -116,7 +116,7 @@ export default class TableTypeForm extends React.Component{
                                 </span>
                                 :
                                 <span>
-                                    <Switch defaultChecked={true} onChange={this.handleChange.bind(this,Id)}/>
+                                    <Switch defaultChecked={true}/>
                                     <Icon type="edit" className="Menu-operation" onClick={() => this.edit(index)}/>
                                     <Popconfirm title="确定删除?"  onConfirm={this.confirm.bind(this,Id)} onCancel={cancel}>
                                     <Icon type="delete" className="Menu-operation"/>

@@ -33,7 +33,6 @@ export default class ShowTableQueue extends React.Component {
         queueInfo:[]
     };
     showTable = () => {
-        console.log(this.state.queueInfo);
         const that =this;
         fetch('/iqesTT/queue/tableTypeDescribe?tableTypeDescribe='+'小桌', {
         }).then(function(response) {
@@ -42,7 +41,6 @@ export default class ShowTableQueue extends React.Component {
             let info = [];
             console.log(jsonData);
             jsonData.queueInfos.map((k,index) => {
-                console.log(k.id);
                 let obj = {
                     queueId:k.queueId,
                     eatNumber:k.eatNumber,
