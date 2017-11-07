@@ -14,7 +14,12 @@ export default class TableState extends React.Component{
                 area: "",
                 state: "",
                 tableTypeDescribe: ""
-            }]
+            }],
+            callInfo:{
+                orderNumber:'',
+                tableID:'',
+                tableNumber:''
+            }
         };
 
         function cancel(e){
@@ -62,10 +67,10 @@ export default class TableState extends React.Component{
             title: '呼叫',
             dataIndex: 'operation',
             render:(text, record, index)=>{
-                const Id = record.key;
+                const tableName = record.tableName;
                 return(
                     <span>
-                        <Popconfirm title="确定叫号?"  onConfirm={this.confirm.bind(this,Id)} onCancel={cancel}>
+                        <Popconfirm title="确定叫号?"  onConfirm={this.confirm.bind(this,tableName)} onCancel={cancel}>
                                     <Icon type="notification" className="Menu-operation"/>
                         </Popconfirm>
                     </span>
@@ -106,20 +111,32 @@ export default class TableState extends React.Component{
         this.getData();
     }
     //叫号
-    confirm(id){
-        console.log(id);
-        console.log(this.state.data[0].tableName);
+    confirm(tableName){
+        console.log(tableName);
         const that = this;
-        fetch("/iqesTT/queue/arrivingCustomer?tableName=0"+id,
+        fetch("/iqesTT/queue/arrivingCustomer?tableName="+tableName,
         ).then(function(response) {
             return response.json();
         }).then(function (jsonData) {
             console.log(jsonData);
-            that.getData();
+            console.log(tableName);
+            that.setState({
+                    callInfo: {
+                        orderNumber: jsonData.extractNumber.tableNumber.tableType.tableTypeName + jsonData.extractNumber.id,
+                        tableNumber: jsonData.extractNumber.tableNumber.name
+                    }
+                }
+            );
+            console.log(222);
+            that.handleTableCall();
             message.success('叫号成功');
         }).catch(function () {
             console.log('出错了');
         });
+    }
+
+    handleTableCall(){
+        this.props.handleTableCall(this.state.callInfo);
     }
     //设为空桌
     handleTable(id) {

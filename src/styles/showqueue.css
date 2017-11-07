@@ -2,7 +2,7 @@
     border:1px #D5DDE1 solid;
     padding-top:10px;
 }
-.queueIcon{
+ .queueIcon{
     background-color:#4FB5F7;
     color:white;
     text-align:center;
@@ -10,3 +10,6 @@
     line-height:28px;
     cursor: pointer;
 }
+ .queueIcon .anticon:before{
+     color:white;
+ }

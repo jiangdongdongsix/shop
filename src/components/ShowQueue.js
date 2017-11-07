@@ -92,9 +92,6 @@ export default class CallClear extends React.Component{
     componentWillMount(){
         this.handleQueueInfo();
     }
-    saveFormRef = (form) => {
-        this.form = form;
-    }
 
     render(){
         const queueElements=[];      //保存渲染以后 JSX的数组
@@ -150,16 +147,15 @@ export default class CallClear extends React.Component{
         return (
             <Layout style={{backgroundColor:'white',padding:"20px 0px"}}>
                 <Content>
-                    <Row>
+                    <div>
                         {queueElements}
                         <CreateTable
-                            ref={this.saveFormRef}
                             visible={this.state.visible}
                             tableTypeDescribe={this.state.tableTypeDescribe}
                             onCancel={this.handleCancel}
                             onCreate={this.handleCreate}
                         />
-                    </Row>
+                    </div>
                 </Content>
             </Layout>
         )

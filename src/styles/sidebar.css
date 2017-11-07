@@ -1,5 +1,4 @@
 @import '~antd/dist/antd.css';
-
 #components-layout-demo-side .logo {
     height: 32px;
     background: #333;
@@ -33,5 +32,9 @@
 .anticon:before{
     color:white;
     font-size:14px;
+}
+
+.iconfont{
+    color:white;
 }
 
