@@ -4,6 +4,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { Router, Route, IndexRoute } from 'react-router'
 import history from './history'
 import routes from './routes'
+import './index.css'
 import { createStore,applyMiddleware} from 'redux'
 import {Provider,connect } from 'react-redux'
 

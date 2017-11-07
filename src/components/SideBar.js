@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import history from './../history';
 import { Link } from 'react-router-dom';
+import './../styles/sidebar.css'
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -34,7 +35,7 @@ export default class Side extends React.Component {
 
                         <Menu.Item key="2">
                             <Link to="/verify">
-                                <Icon type="desktop"/>
+                                <i class="iconfont">&#xe65e;</i>
                                 <span className="sideColor">入场验证</span>
                             </Link>
                         </Menu.Item >
@@ -43,26 +44,26 @@ export default class Side extends React.Component {
                         </div>
                         <Menu.Item key="4" >
                             <Link to="/basicInfo">
-                                <Icon type="file" />
+                                <i class="iconfont">&#xe603;</i>
                                 <span className="sideColor">基本信息设置</span>
                             </Link>
 
                         </Menu.Item>
                         <Menu.Item key="5">
                             <Link to="/tabletype">
-                                <Icon type="file" />
+                                <i class="iconfont">&#xe624;</i>
                                 <span className="sideColor">桌类型设置</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="7">
                             <Link to="/tableset">
-                            <Icon type="file" />
+                                <i class="iconfont">&#xe601;</i>
                             <span className="sideColor">门店桌位图及桌信息设置</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="8">
                             <Link to="/menu">
-                            <Icon type="file" />
+                                <i class="iconfont">&#xe615;</i>
                             <span className="sideColor">菜单信息上传更新</span>
                             </Link>
                         </Menu.Item>
