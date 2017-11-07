@@ -147,7 +147,7 @@ export default class CallClear extends React.Component{
                             <Row>
                                 <Col span={24}>
                                     <p className="queueIcon" onClick={this.showModal.bind(this)}>
-                                        <Icon type="search" />查看队列
+                                        <Icon type="search"/>查看队列
                                     </p>
                                 </Col>
                             </Row>
