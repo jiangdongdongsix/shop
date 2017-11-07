@@ -4,6 +4,7 @@ import '../styles/callclear.css'
 import HeaderCustom from './HeaderCustom'
 import ShowQueue from "./ShowQueue"
 import TableState from "./TableState"
+import MixTableCall from './MixTableCall';
 const { Content,} = Layout;
 
 
@@ -129,6 +130,10 @@ export default class CallClear extends React.Component{
         });
     }
 
+    handleMixTable(){
+        console.log(111);
+    }
+
     componentWillMount(){
         this.initData();
     }
@@ -145,7 +150,9 @@ export default class CallClear extends React.Component{
                         <Col span={2} ><Button type='primary' style={{border:"none",color:"white"}} onClick={this.handleCall.bind(this)}><span className='font-color'>呼叫排号</span></Button></Col>
                         <Col span={5} style={{color:'orange',fontSize:'14px',paddingTop:"8px"}}><Icon type="notification"/>当前叫号:{this.state.callInfo.orderNumber} 顾客,请到 {this.state.callInfo.tableNumber} 桌就餐</Col>
                         <Col span={5}></Col>
-                        <Col span={3}><Button type='primary'><span className='font-color'>手动叫号拼桌</span></Button></Col>
+                        <Col span={3}>
+                            <MixTableCall/>
+                        </Col>
                         <Col span={2}><Button type='primary' onClick={this.handlePause.bind(this)}><span className='font-color'>{this.state.pauseCall}</span></Button></Col>
                     </Row>
                     <Row>

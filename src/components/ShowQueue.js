@@ -80,9 +80,10 @@ export default class CallClear extends React.Component{
                         eatMaxNumber: jsonData.tableTypeDTOs[i].eatMaxNumber,
                         eatMinNumber: jsonData.tableTypeDTOs[i].eatMinNumber,
                         queueNumbers: jsonData.tableTypeDTOs[i].queueNumbers,
-                        arrivingQueueInfoList:'A101'
+                        arrivingQueueInfoList: jsonData.tableTypeDTOs[i].arrivingQueueInfoList.length === 0 ? '无需等待': jsonData.tableTypeDTOs[i].arrivingQueueInfoList[0]
                 });
             }
+            console.log(jsonData.tableTypeDTOs[0].arrivingQueueInfoList.length === 0);
             that.setState({Info:queueInfo});
         }).catch(function () {
             console.log('查看排队失败');
