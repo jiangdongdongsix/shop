@@ -1,9 +1,8 @@
 import React from 'react';
-import { Table,Layout,Button,Row,Col,Input,Switch,Popconfirm,Icon,message } from 'antd';
+import { Table,Layout,Button,Row,Col,Icon,message,Popconfirm } from 'antd';
 import './../styles/menu.css'
 import AreaTableInfo from './AreaTableInfo'
 const {Content} = Layout;
-const Search = Input.Search;
 
 
 export default class TableState extends React.Component{
@@ -17,30 +16,19 @@ export default class TableState extends React.Component{
                 tableTypeDescribe: ""
             }]
         };
-        this.confirm = this.confirm.bind(this);
-        this.showEdit = this.showEdit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+
         function cancel(e){
             console.log(e);
-            message.error('取消删除');
+            message.error('取消叫号');
         };
-
         this.columns = [{
             title:'',
-            dataIndex:'key',
+            dataIndex:'id',
             width:'0'
         },{
             title: '状态',
             dataIndex: 'state',
-            width: '15%',
-            render:()=> {
-                return (
-                    <span>
-                       <Icon type="smile" />
-                        <span>就餐中</span>
-                    </span>
-                )
-            }
+            width: '15%'
         }, {
             title: '桌编号',
             dataIndex: 'tableName',
@@ -62,10 +50,10 @@ export default class TableState extends React.Component{
             dataIndex: '',
             width: '13%',
             render: (text, record, index) => {
-                const Id = record.id;
+                const Id = record.key;
                 return (
                     <span>
-                        <Button>设为空桌</Button>
+                        <Button onClick={this.handleTable.bind(this,Id)}>设为空桌</Button>
                     </span>
                 )
             }
@@ -74,66 +62,79 @@ export default class TableState extends React.Component{
             title: '呼叫',
             dataIndex: 'operation',
             render:(text, record, index)=>{
-                const Id = record.id;
+                const Id = record.key;
                 return(
                     <span>
-                        <Icon type="notification" className="Menu-operation" />
+                        <Popconfirm title="确定叫号?"  onConfirm={this.confirm.bind(this,Id)} onCancel={cancel}>
+                                    <Icon type="notification" className="Menu-operation"/>
+                        </Popconfirm>
                     </span>
                 )
             }
         }]
     }
-    componentDidMount(){
+    //初始化数据
+    getData(){
         let that = this;
         fetch("/iqesTT/restaurant/tableNumber/all")
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
             console.log(jsonData);
-            let len = jsonData.tableNumbers.length;
             let tableInfo = [];
-            for(let i=0;i<len;i++) {
-                tableInfo.push({
-                    tableName: jsonData.tableNumbers[i].tableName,
-                    area: jsonData.tableNumbers[i].area,
-                    tableTypeDescribe: jsonData.tableNumbers[i].tableTypeDescribe,
-                    tableNumber: '3'
-                })
-            }
-            that.setState({data:tableInfo});
+            jsonData.tableNumbers.map((k,index) =>{
+                console.log(k);
+                let obj ={
+                    key: k.id,
+                    state:  k.state === '1' ? '就餐中' :'空闲中',
+                    tableName:k.tableName,
+                    area: k.area,
+                    tableTypeDescribe: k.tableTypeDescribe,
+                    tableNumber:'3',
+                };
+                tableInfo.push(obj);
+            });
+            that.setState({
+                data:tableInfo
+            });
         }).catch(function () {
             console.log('出错了');
         });
-    }
-    confirm(id){
-        let that = this;
-        console.log(id);
-        fetch("/iqesTT/restaurant/menu?id="+id, {
-            method: 'DELETE'
-        }).then(function(response) {
-            return response.json();
-        }).then(function (jsonData) {
-            if(jsonData.ErrorCode == 0){
-                console.log('删除成功');
-            }
-            console.log(that.state.data);
-        }).catch(function () {
-            console.log('出错了');
-        });
-    };
-    showEdit(Id) {
-        let that = this;
-        console.log(that.state.data);
-        let len = that.state.data.length;
-        for (let i = 0; i < len; i++) {
-            if (that.state.data[i].id == Id) {
-                console.log(that.state.data[i]);
-            }
-        }
     }
 
-    handleChange(Id){
-        console.log(Id);
+    componentWillMount(){
+        this.getData();
+    }
+    //叫号
+    confirm(id){
+        console.log(id);
+        console.log(this.state.data[0].tableName);
+        const that = this;
+        fetch("/iqesTT/queue/arrivingCustomer?tableName=0"+id,
+        ).then(function(response) {
+            return response.json();
+        }).then(function (jsonData) {
+            console.log(jsonData);
+            that.getData();
+            message.success('叫号成功');
+        }).catch(function () {
+            console.log('出错了');
+        });
+    }
+    //设为空桌
+    handleTable(id) {
+        console.log(id);
+        let that = this;
+        fetch("/iqesTT/restaurant/tableNumber/state?id="+id+'&state='+ 0,{
+             method:'POST'
+        }).then(function (response) {
+            return response.json();
+        }).then(function (jsonData) {
+            console.log(jsonData);
+            that.getData();
+         }).catch(function () {
+            console.log('出错了');
+         });
     }
     render(){
         return (
@@ -146,7 +147,7 @@ export default class TableState extends React.Component{
                             </Row>
                             <Row>
                                 <div className="Menu-table">
-                                    <Table columns={this.columns} dataSource={this.state.data} onChange={this.handleChange} />
+                                    <Table columns={this.columns} dataSource={this.state.data} />
                                 </div>
                             </Row>
                         </Col>

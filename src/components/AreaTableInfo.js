@@ -35,7 +35,7 @@ export default class TableInfo extends React.Component {
             AreaTable.push(
                 <div>
                     <Col span={2}>
-                        <Button type="primary" style={{padding:"0 10px"}}>
+                        <Button type="primary" style={{padding:"0 10px"}} disabled={false}>
                             <span style={{color:"white"}}>{table}区 {this.state.Info[table]>0 ? '空'+this.state.Info[table]+'桌' : '已满' }</span>
                         </Button>
                     </Col>
