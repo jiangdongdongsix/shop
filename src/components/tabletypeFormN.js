@@ -229,13 +229,13 @@ export default class TableTypeForm extends React.Component{
     }
 
     getdata(){
-        console.log("初始化数据");
         const that = this;
         let dataList = [];
         fetch("/iqesTT/restaurant/tableType/all")
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
+            console.log(JSON.stringify(jsonData))
             console.log(jsonData)
             jsonData.tableTypes.map((k,index) =>{
                 let obj ={
@@ -271,7 +271,7 @@ export default class TableTypeForm extends React.Component{
                 data:dataList
             })
         }).catch(function () {
-            console.log('出错了');
+            console.log('访问出错');
         });
     }
 
