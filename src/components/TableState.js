@@ -4,7 +4,7 @@ import './../styles/menu.css'
 import AreaTableInfo from './AreaTableInfo'
 const {Content} = Layout;
 
-
+//叫号清桌页面 获取所有桌信息
 export default class TableState extends React.Component{
     constructor(props){
         super(props);

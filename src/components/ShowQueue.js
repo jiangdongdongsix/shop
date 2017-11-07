@@ -32,6 +32,7 @@ const columns = [{
 }];
 
 
+//叫号清桌页面 分桌型查看队列
 export default class CallClear extends React.Component{
     constructor() {
         super();

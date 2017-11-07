@@ -2,7 +2,7 @@ import React from 'react';
 import { Button,Input,Modal,Form,Upload,Icon,message,Col,Row } from 'antd';
 import './../styles/menu.css'
 
-
+//门店图以及桌信息设置  导入
 export default class AddMenu extends React.Component {
     state = {
         url:""

@@ -59,6 +59,8 @@ const success = () => {
 const error = () => {
     console.log('保存失败');
 };
+
+//门店图以及桌信息设置  新增餐桌
 export default class AddTable extends React.Component {
     state = {
         visible: false,

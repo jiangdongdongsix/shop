@@ -27,7 +27,8 @@ const columns = [{
     width: '15%'
 }];
 
-//叫号清桌页面  不同桌型的排队队列
+
+//叫号清桌页面  手动拼桌叫号
 export default class ShowTableQueue extends React.Component {
     constructor(props){
         super(props);

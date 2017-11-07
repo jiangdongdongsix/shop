@@ -57,6 +57,7 @@ class EditableCell extends React.Component {
         );
     }
 }
+//桌位图上传以及桌信息设置页面
 
 export default class TableTypeForm extends React.Component{
     constructor(props){

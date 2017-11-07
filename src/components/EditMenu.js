@@ -62,6 +62,8 @@ const success = () => {
 const error = () => {
     console.log('保存失败');
 };
+
+//菜单基本信息设置 编辑菜单
 export default class EditMenu extends React.Component {
     state = {
         visible: false,

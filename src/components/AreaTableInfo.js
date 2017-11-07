@@ -2,6 +2,7 @@ import React from 'react';
 import { Button,Row,Col } from 'antd';
 import './../styles/menu.css'
 
+//叫号清桌页面  分区域空几桌
 export default class TableInfo extends React.Component {
     constructor() {
         super();

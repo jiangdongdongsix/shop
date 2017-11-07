@@ -4,7 +4,6 @@ import {
   IndexRoute
 } from 'react-router'
 
-import Index from './containers/index';
 import BasicInfo from './containers/basicInfo';
 import CallNumber from "./containers/callNumber";
 import Login from './containers/login';

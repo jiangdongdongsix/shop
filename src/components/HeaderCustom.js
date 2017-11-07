@@ -4,6 +4,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
 
+// 头部组件
 export default class HeaderCustom extends React.Component{
     render(){
         return (

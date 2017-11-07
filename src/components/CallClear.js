@@ -6,6 +6,8 @@ import ShowQueue from "./ShowQueue"
 import TableState from "./TableState"
 const { Content,} = Layout;
 
+
+//叫号清桌页面
 export default class CallClear extends React.Component{
     constructor(props){
         super();

@@ -62,6 +62,8 @@ const success = () => {
 const error = () => {
     console.log('保存失败');
 };
+
+//菜单基本设置页面  新增菜单组件
 export default class AddMenu extends React.Component {
     state = {
         visible: false,
