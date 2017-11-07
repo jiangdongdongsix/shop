@@ -16,9 +16,7 @@ export default class TableState extends React.Component{
                 tableTypeDescribe: ""
             }]
         };
-        function success(e){
-            message.error('叫号成功');
-        }
+
         function cancel(e){
             console.log(e);
             message.error('取消叫号');
@@ -116,6 +114,7 @@ export default class TableState extends React.Component{
         ).then(function(response) {
             return response.json();
         }).then(function (jsonData) {
+            console.log(jsonData);
             that.getData();
             message.success('叫号成功');
         }).catch(function () {
