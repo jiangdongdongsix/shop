@@ -294,19 +294,7 @@ export default class TableTypeForm extends React.Component{
                 <HeaderCustom/>
                 <Content style={{border:"2px solid #f9f7f7",padding:20, margin:24}}>
                     <Row>
-                        <Col span={10}>
-                            <Row>
-                                <span className="Table-title">店面桌位图</span>
-                            </Row>
-                            <Row>
-                                <Col span={12}>
-                                    <AddStorePic/>
-                                </Col>
-                                <Col span={12}>
-                                    <span className="Table-info">*导入的图中带有桌类型以及桌信息</span>
-                                </Col>
-                            </Row>
-                        </Col>
+                        <AddStorePic/>
                         <Col span={14}>
                             <Row>
                                 <span className="Table-title">桌位信息</span>

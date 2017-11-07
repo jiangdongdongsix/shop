@@ -100,7 +100,7 @@ class NormalLoginForm extends React.Component {
                         登录
                     </Button>
                     <Modal
-                        title="Basic Modal"
+                        title="提示"
                         visible={this.state.visible}
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}

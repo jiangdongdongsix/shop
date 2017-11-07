@@ -1,69 +1,52 @@
 import React from 'react';
-import { Button,Input,Modal,Form,Upload,Icon } from 'antd';
+import { Button,Input,Modal,Form,Upload,Icon,message,Col,Row } from 'antd';
 import './../styles/menu.css'
-const FormItem = Form.Item;
-const CreateForm = Form.create()(
-    (props) => {
-        const { visible, onCancel, onCreate, form } = props;
-        const { getFieldDecorator } = form;
-        const formItemLayout = {
-            labelCol: { span: 4 },
-            wrapperCol: { span: 14 },
-        };
-        return (
-            <Modal
-                visible={visible}
-                title="导入门店图"
-                okText="确定"
-                onCancel={onCancel}
-                onOk={onCreate}
-            >
-            </Modal>
-        );
-    }
-);
 
-const success = () => {
-    console.log('保存成功');
-};
-const error = () => {
-    console.log('保存失败');
-};
+
 export default class AddMenu extends React.Component {
     state = {
-        fileList: [{
-            uid: -1,
-            name: 'xxx.png',
-            status: 'done',
-            url: 'http://www.baidu.com/xxx.png',
-        }],
+        url:""
     }
-    handleChange = (info) => {
-        let fileList = info.fileList;
 
-        // 1. Limit the number of uploaded files
-        //    Only to show two recent uploaded files, and old ones will be replaced by the new
-        fileList = fileList.slice(-2);
+    componentDidMount(){
+        const that = this;
+        fetch("/iqesTT/restaurant/seatingChart/all")
+            .then(function(response) {
+                return response.json();
+            }).then(function (jsonData) {
+                console.log(jsonData);
+            that.setState({
+                url:jsonData.seatingCharts[0].url
+            })
+        }).catch(function(){
+            console.log("出错了789");
+        })
+    }
 
-        // 2. read from response and show file link
-        fileList = fileList.map((file) => {
-            if (file.response) {
-                // Component will show file.url as link
-                file.url = file.response.url;
-            }
-            return file;
-        });
+    handleChange = (info) =>{
+        const that = this;
+        if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully`);
+            fetch("/iqesTT/restaurant/seatingChart/all")
+                .then(function(response) {
+                    return response.json();
+                }).then(function (jsonData) {
+                console.log(jsonData);
+                that.setState({
+                    url:jsonData.seatingCharts[2].url
+                })
+            }).catch(function(){
+                console.log("出错了789");
+            })
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    }
 
-        // 3. filter successfully uploaded files according to response from server
-        fileList = fileList.filter((file) => {
-            if (file.response) {
-                return file.response.status === 'success';
-            }
-            return true;
-        });
 
-        this.setState({ fileList });
-    };
 
     render() {
         const props = {
@@ -72,11 +55,28 @@ export default class AddMenu extends React.Component {
             multiple: true,
         };
             return (
-            <Upload {...props} fileList={this.state.fileList}>
-                <Button type='danger'>
-                    <Icon type="upload"/> <span style={{color:'white'}}>导入门店图</span>
-                </Button>
-            </Upload>
+                <Col span={10}>
+                    <Row>
+                        <span className="Table-title">店面桌位图</span>
+                    </Row>
+                    <Row>
+                        <Col span={12}>
+                            <Upload {...props}>
+                                <Button type='danger'>
+                                    <Icon type="upload"/> <span style={{color:'white'}}>导入门店图</span>
+                                    <i class="iconfont icon-xxx"></i>
+                                </Button>
+                            </Upload>
+                        </Col>
+                        <Col span={12}>
+                            <span className="Table-info">*导入的图中带有桌类型以及桌信息</span>
+                        </Col>
+                    </Row>
+                    <Row  style={{marginTop:'100px'}}>
+                        <img src={this.state.url} style={{width:'50%',height:'100%'}}/>
+                    </Row>
+                </Col>
+
             );
 };
 }
