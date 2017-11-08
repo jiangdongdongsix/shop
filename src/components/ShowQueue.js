@@ -40,7 +40,7 @@ export default class CallClear extends React.Component{
             visible: false,
             Info:[
                 {
-                    arrivingQueueInfoList: [],
+                    arrivingQueueInfo:'',
                     eatMaxNumber:'',
                     eatMinNumber:'',
                     queueNumbers:'',
@@ -80,10 +80,9 @@ export default class CallClear extends React.Component{
                         eatMaxNumber: jsonData.tableTypeDTOs[i].eatMaxNumber,
                         eatMinNumber: jsonData.tableTypeDTOs[i].eatMinNumber,
                         queueNumbers: jsonData.tableTypeDTOs[i].queueNumbers,
-                        arrivingQueueInfoList: jsonData.tableTypeDTOs[i].arrivingQueueInfoList.length === 0 ? '无需等待': jsonData.tableTypeDTOs[i].arrivingQueueInfoList[0]
+                        arrivingQueueInfo: jsonData.tableTypeDTOs[i].arrivingQueueInfo
                 });
             }
-            console.log(jsonData.tableTypeDTOs[0].arrivingQueueInfoList.length === 0);
             that.setState({Info:queueInfo});
         }).catch(function () {
             console.log('查看排队失败');
@@ -114,7 +113,7 @@ export default class CallClear extends React.Component{
                                 <Col span={10}>
                                     <div>
                                         <h3>已排{queue.queueNumbers}桌</h3>
-                                        <p>即将叫号{queue.arrivingQueueInfoList}</p>
+                                        <p>即将叫号{queue.arrivingQueueInfo}</p>
                                     </div>
                                 </Col>
                             </Row>

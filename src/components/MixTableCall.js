@@ -31,7 +31,7 @@ const columns = [{
     width: '20%'
 }];
 const dataSource = [{
-    key:'1',
+    key:'0',
     queueId:'C101',
     tableType:'大桌',
     eatNumber:'8',
@@ -40,7 +40,7 @@ const dataSource = [{
     customerName:'***',
     customerTel:'11111'
 },{
-    key:'2',
+    key:'1',
     queueId:'CA01',
     tableType:'小桌',
     eatNumber:'2',
@@ -49,7 +49,7 @@ const dataSource = [{
     customerName:'***',
     customerTel:'22222'
 },{
-    key:'3',
+    key:'2',
     queueId:'B101',
     tableType:'中桌',
     eatNumber:'6',
@@ -58,7 +58,7 @@ const dataSource = [{
     customerName:'***',
     customerTel:'33333'
 },{
-    key:'4',
+    key:'3',
     queueId:'C201',
     tableType:'大桌',
     eatNumber:'18',
@@ -67,7 +67,7 @@ const dataSource = [{
     customerName:'***',
     customerTel:'44444'
 },{
-    key:'5',
+    key:'4',
     queueId:'A201',
     tableType:'小桌',
     eatNumber:'8',
@@ -75,6 +75,15 @@ const dataSource = [{
     queueStartTime:'5555',
     customerName:'***',
     customerTel:'5555'
+},{
+    key:'5',
+    queueId:'C101',
+    tableType:'大桌',
+    eatNumber:'8',
+    seatFlag:'否',
+    queueStartTime:'11111',
+    customerName:'***',
+    customerTel:'12334'
 },{
     key:'6',
     queueId:'C101',
@@ -93,60 +102,10 @@ const dataSource = [{
     queueStartTime:'11111',
     customerName:'***',
     customerTel:'12334'
-},{
-    key:'8',
-    queueId:'C101',
-    tableType:'大桌',
-    eatNumber:'8',
-    seatFlag:'否',
-    queueStartTime:'11111',
-    customerName:'***',
-    customerTel:'12334'
-},{
-    queueId:'C101',
-    tableType:'大桌',
-    eatNumber:'8',
-    seatFlag:'否',
-    queueStartTime:'11111',
-    customerName:'***',
-    customerTel:'12334'
-},{
-    queueId:'C101',
-    tableType:'大桌',
-    eatNumber:'8',
-    seatFlag:'否',
-    queueStartTime:'11111',
-    customerName:'***',
-    customerTel:'12334'
-},{
-    queueId:'C101',
-    tableType:'大桌',
-    eatNumber:'8',
-    seatFlag:'否',
-    queueStartTime:'11111',
-    customerName:'***',
-    customerTel:'12334'
-},{
-    queueId:'C101',
-    tableType:'大桌',
-    eatNumber:'8',
-    seatFlag:'否',
-    queueStartTime:'11111',
-    customerName:'***',
-    customerTel:'12334'
-},{
-    queueId:'C101',
-    tableType:'大桌',
-    eatNumber:'8',
-    seatFlag:'否',
-    queueStartTime:'11111',
-    customerName:'***',
-    customerTel:'099999'
-}
-]
+}]
 const CreateForm = Form.create()(
     (props) => {
-        const { visible, onCancel, onCreate, form } = props;
+        const { visible, onCancel, onCreate, form, queueId} = props;
         const { getFieldDecorator } = form;
         const formItemLayout = {
             labelCol: { span: 4 },
@@ -155,7 +114,6 @@ const CreateForm = Form.create()(
         const rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-                console.log(selectedRows[0].queueId);
             },
             getCheckboxProps: record => ({
                 disabled: record.name === 'Disabled User', // Column configuration not to be checked
@@ -170,20 +128,21 @@ const CreateForm = Form.create()(
                 onOk={onCreate}
                 footer={null}
                 width='550px'
+                queueId = {queueId}
             >
                 <Row style={{paddingBottom:'10px'}}>
                     <Col span={4} style={{paddingTop:"5px"}}>
                         请输入空桌号:
                     </Col>
                     <Col span={5}>
-                        <Input placeholder="请输入空桌编号" />
+                        <Input placeholder="请输入空桌编号" defaultValue={''}/>
                     </Col>
                     <Col span={1}></Col>
                     <Col span={5} style={{paddingTop:"5px"}}>
                         请勾选客户排号:
                     </Col>
                     <Col span={5}>
-                        <Input placeholder="请勾选客户排号" />
+                        <Input placeholder="请勾选客户排号" value={queueId}/>
                     </Col>
                     <Col span={1}></Col>
                     <Col span={2}>
@@ -202,6 +161,7 @@ const CreateForm = Form.create()(
 export default class ShowTableQueue extends React.Component {
     state = {
         visible: false,
+        queueId:[]
     };
     showModal = () => {
         this.setState({ visible: true });
@@ -222,6 +182,7 @@ export default class ShowTableQueue extends React.Component {
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
+                    queueId={this.state.queueId}
                 />
             </div>
         );
