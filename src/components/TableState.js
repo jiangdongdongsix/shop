@@ -152,6 +152,28 @@ export default class TableState extends React.Component{
             console.log('出错了');
          });
     }
+
+    handleAreaTable(data){
+        console.log(data);
+        let dataInfo = [];
+        data.map((k,index) => {
+            let obj = {
+                key:k.id,
+                tableName:k.tableName,
+                area:k.area,
+                state:k.state === '1' ? '就餐中' :'空闲中',
+                tableTypeDescribe: k.tableTypeDescribe,
+                tableNumber:'33'
+            };
+            dataInfo.push(obj);
+        });
+        console.log(dataInfo);
+        this.setState({
+            data:dataInfo
+        })
+    }
+
+
     render(){
         return (
             <Layout style={{backgroundColor:'white'}}>
@@ -159,7 +181,7 @@ export default class TableState extends React.Component{
                     <Row>
                         <Col span={24}>
                             <Row>
-                                <AreaTableInfo/>
+                                <AreaTableInfo handleAreaTable={this.handleAreaTable.bind(this)}/>
                             </Row>
                             <Row>
                                 <div className="Menu-table">

@@ -3,7 +3,6 @@ import { Table,Layout,Button,Row,Col,Input,Switch,Popconfirm,Icon,message } from
 import HeaderCustom from './HeaderCustom'
 import AddTable from './AddTable'
 import AddStorePic from './AddStorePic'
-import './../styles/menu.css'
 const {Content} = Layout;
 const Search = Input.Search;
 
