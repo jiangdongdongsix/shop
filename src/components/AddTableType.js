@@ -135,7 +135,7 @@ export default class AddTableType extends React.Component {
         return (
             <div>
                 <Button type="danger" icon="file-add" onClick={this.showModal}>
-                    <span style={{color:"white"}}>新增菜单</span>
+                    <span style={{color:"white"}}>新增桌型</span>
                 </Button>
                 <CreateForm
                     ref={this.saveFormRef}

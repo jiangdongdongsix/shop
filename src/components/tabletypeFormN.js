@@ -127,7 +127,6 @@ export default class TableTypeForm extends React.Component{
                             </span>
                                 :
                                 <span>
-                            <Switch defaultChecked={true}/>
                             <Icon type="edit" className="Menu-operation" onClick={() => this.edit(index)}/>
                             <Popconfirm title="确定删除?"  onConfirm={this.confirm.bind(this,Id)} onCancel={cancel}>
                             <Icon type="delete" className="Menu-operation"/>
@@ -330,7 +329,7 @@ export default class TableTypeForm extends React.Component{
                                 <Col span={1}></Col>
                                 <Col span={2}>
                                     <Button type="danger" icon="code-o">
-                                        <span style={{color:"white"}}>导入菜单</span>
+                                        <span style={{color:"white"}}>导入桌型</span>
                                     </Button>
                                 </Col>
                                 <Col span={15}></Col>
