@@ -103,66 +103,19 @@ const dataSource = [{
     customerName:'***',
     customerTel:'12334'
 }]
-const CreateForm = Form.create()(
-    (props) => {
-        const { visible, onCancel, onCreate, form, queueId} = props;
-        const { getFieldDecorator } = form;
-        const formItemLayout = {
-            labelCol: { span: 4 },
-            wrapperCol: { span: 14 },
-        };
-        const rowSelection = {
-            onChange: (selectedRowKeys, selectedRows) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            },
-            getCheckboxProps: record => ({
-                disabled: record.name === 'Disabled User', // Column configuration not to be checked
-            }),
-        };
-        return (
-            <Modal
-                visible={visible}
-                title="手动叫号拼桌"
-                okText="确定"
-                onCancel={onCancel}
-                onOk={onCreate}
-                footer={null}
-                width='550px'
-                queueId = {queueId}
-            >
-                <Row style={{paddingBottom:'10px'}}>
-                    <Col span={4} style={{paddingTop:"5px"}}>
-                        请输入空桌号:
-                    </Col>
-                    <Col span={5}>
-                        <Input placeholder="请输入空桌编号" defaultValue={''}/>
-                    </Col>
-                    <Col span={1}></Col>
-                    <Col span={5} style={{paddingTop:"5px"}}>
-                        请勾选客户排号:
-                    </Col>
-                    <Col span={5}>
-                        <Input placeholder="请勾选客户排号" value={queueId}/>
-                    </Col>
-                    <Col span={1}></Col>
-                    <Col span={2}>
-                        <Button>呼叫</Button>
-                    </Col>
-                    <Col span={1}></Col>
-                </Row>
-                <Table columns={columns} rowSelection={rowSelection} dataSource={dataSource}/>
-            </Modal>
-        );
-    }
-);
 
 
 //叫号清桌页面  手动拼桌叫号
 export default class ShowTableQueue extends React.Component {
     state = {
         visible: false,
-        queueId:[]
+        queueId:[],
+        queueInfo:{
+            queueInfos:"",
+            tables:""
+        }
     };
+
     showModal = () => {
         this.setState({ visible: true });
     };
@@ -171,19 +124,89 @@ export default class ShowTableQueue extends React.Component {
     };
 
 
+    onChangeTables = (e) => {
+        this.setState({
+            queueInfo:{
+                tables:e.target.value
+            }
+       })
+    }
+
+
+    onChangeQueueInfos = (e) => {
+        this.setState({
+            queueInfo:{
+                queueInfos:e.target.value
+            }
+        })
+    }
+
+
+    submitQueue(){
+        console.log("hhh")
+    }
+
+
     render() {
+        const rowSelection = {
+            onChange: (selectedRowKeys, selectedRows) => {
+                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                let queue ="";
+                selectedRows.map((k,index)=>{
+                    queue  = queue + k.queueId +',';
+                    console.log(queue);
+                })
+                this.setState({
+                    queueInfo:{
+
+                        queueInfos:queue
+                    }
+                })
+            }
+        };
+
         return (
             <div>
                 <Button type='primary' onClick={this.showModal}>
                     <span style={{color:"white"}}>手动叫号拼桌</span>
                 </Button>
-                <CreateForm
-                    ref={this.saveFormRef}
+                <Modal
                     visible={this.state.visible}
-                    onCancel={this.handleCancel}
-                    onCreate={this.handleCreate}
-                    queueId={this.state.queueId}
-                />
+                    title="手动叫号拼桌"
+                    okText="确定"
+                    footer={null}
+                    width='550px'
+                >
+                    <Row style={{paddingBottom:'10px'}}>
+                        <Col span={4} style={{paddingTop:"5px"}}>
+                            请输入空桌号:
+                        </Col>
+                        <Col span={5}>
+                            <Input placeholder="请输入空桌编号" value={this.state.queueInfo.tables}   onChange={this.onChangeTables}/>
+                        </Col>
+                        <Col span={1}></Col>
+                        <Col span={5} style={{paddingTop:"5px"}}>
+                            请勾选客户排号:
+                        </Col>
+                        <Col span={5}>
+                            <Input placeholder="请勾选客户排号" value={this.state.queueInfo.queueInfos} onChange={this.onChangeQueueInfos}/>
+                        </Col>
+                        <Col span={1}></Col>
+                        <Col span={2}>
+                            <Button onClick={this.submitQueue.bind(this)}>呼叫</Button>
+                        </Col>
+                        <Col span={1}></Col>
+                    </Row>
+                    <Table columns={columns} rowSelection={rowSelection} dataSource={dataSource}/>
+                </Modal>
+
+                {/*<CreateForm*/}
+                    {/*ref={this.saveFormRef}*/}
+                    {/*visible={this.state.visible}*/}
+                    {/*onCancel={this.handleCancel}*/}
+                    {/*onCreate={this.handleCreate}*/}
+                    {/*queueId={this.state.queueId}*/}
+                {/*/>*/}
             </div>
         );
     }
