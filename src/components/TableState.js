@@ -90,7 +90,7 @@ export default class TableState extends React.Component{
             jsonData.tableNumbers.map((k,index) =>{
                 let obj ={
                     key: k.id,
-                    state:  k.state === '1' ? '就餐中' :'空闲中',
+                    state: k.state === '1' ? '就餐中' :'空闲中',
                     tableName:k.tableName,
                     area: k.area,
                     tableTypeDescribe: k.tableTypeDescribe,
@@ -137,6 +137,7 @@ export default class TableState extends React.Component{
     handleTableCall(){
         this.props.handleTableCall(this.state.callInfo);
     }
+
     //设为空桌
     handleTable(id) {
         console.log(id);
@@ -157,15 +158,17 @@ export default class TableState extends React.Component{
         console.log(data);
         let dataInfo = [];
         data.map((k,index) => {
+            console.log(k);
             let obj = {
-                key:k.id,
+                key:k.key,
                 tableName:k.tableName,
                 area:k.area,
-                state:k.state === '1' ? '就餐中' :'空闲中',
+                state:k.state === '就餐中' ? '就餐中' :'空闲中',
                 tableTypeDescribe: k.tableTypeDescribe,
                 tableNumber:'33'
             };
             dataInfo.push(obj);
+            console.log(data);
         });
         console.log(dataInfo);
         this.setState({
