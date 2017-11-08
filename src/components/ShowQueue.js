@@ -99,7 +99,7 @@ export default class CallClear extends React.Component{
         for(let queue of this.state.Info){
             queueElements.push(
                 <div>
-                    <Col span={6}>
+                    <Col span={6}  style={{paddingBottom:'10px'}}>
                         <div className="queuePanel">
                             <Row>
                                 <Col span={1}></Col>

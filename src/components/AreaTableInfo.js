@@ -10,7 +10,13 @@ export default class TableInfo extends React.Component {
             Info:{
                     area:'',
                     number:''
-                }
+                },
+            data:[{
+                tableName: "",
+                area: "",
+                state: "",
+                tableTypeDescribe: ""
+            }],
         };
     }
     handleCreate = () => {
@@ -26,6 +32,39 @@ export default class TableInfo extends React.Component {
                 console.log('出错了');
             });
     };
+
+    handleArea(area){
+        console.log(area);
+        let that = this;
+            fetch('/iqesTT/restaurant/tableNumber/area?areaName='+ area,{
+            }).then(function(response) {
+                return response.json();
+            }).then(function(jsonData) {
+            let areaInfo = [];
+            console.log(jsonData);
+            jsonData.tableNumbers.map((k, index) => {
+                let obj ={
+                    key: k.id,
+                    state:  k.state === '1' ? '就餐中' :'空闲中',
+                    tableName:k.tableName,
+                    area: k.area,
+                    tableTypeDescribe: k.tableTypeDescribe,
+                    tableNumber:'3',
+                };
+                areaInfo.push(obj);
+            });
+                that.setState({data:areaInfo});
+                that.handleAreaTable();
+                console.log(that.state.data);
+            }).catch(function () {
+                console.log('查看排队失败');
+            });
+    }
+
+    handleAreaTable(){
+        this.props.handleAreaTable(this.state.data);
+    }
+
     componentWillMount(){
         console.log(111);
         this.handleCreate();
@@ -36,7 +75,7 @@ export default class TableInfo extends React.Component {
             AreaTable.push(
                 <div>
                     <Col span={2}>
-                        <Button type="primary" style={{padding:"0 10px"}} disabled={false}>
+                        <Button type="primary" style={{padding:"0 10px"}}  onClick={this.handleArea.bind(this,table)}>
                             <span style={{color:"white"}}>{table}区 {this.state.Info[table]>0 ? '空'+this.state.Info[table]+'桌' : '已满' }</span>
                         </Button>
                     </Col>

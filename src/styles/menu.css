@@ -15,9 +15,6 @@
     word-break: break-word;
     text-align:left;
 }
-span .anticon:before{
-    color:grey;
-}
 
 table .anticon:before {
     color:black;
