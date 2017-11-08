@@ -10,13 +10,13 @@ export default class AddMenu extends React.Component {
 
     componentDidMount(){
         const that = this;
-        fetch("/iqesTT/restaurant/seatingChart/all")
+        fetch("/iqesTT/restaurant/seatingChart")
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
                 console.log(jsonData);
             that.setState({
-                url:jsonData.seatingCharts[0].url
+                url:jsonData.chartUrl
             })
         }).catch(function(){
             console.log("出错了789");
@@ -30,13 +30,13 @@ export default class AddMenu extends React.Component {
         }
         if (info.file.status === 'done') {
             message.success(`${info.file.name} file uploaded successfully`);
-            fetch("/iqesTT/restaurant/seatingChart/all")
+            fetch("/iqesTT/restaurant/seatingChart")
                 .then(function(response) {
                     return response.json();
                 }).then(function (jsonData) {
                 console.log(jsonData);
                 that.setState({
-                    url:jsonData.seatingCharts[2].url
+                    url:jsonData.chartUrl
                 })
             }).catch(function(){
                 console.log("出错了789");
@@ -45,8 +45,6 @@ export default class AddMenu extends React.Component {
             message.error(`${info.file.name} file upload failed.`);
         }
     }
-
-
 
     render() {
         const props = {
@@ -64,7 +62,6 @@ export default class AddMenu extends React.Component {
                             <Upload {...props}>
                                 <Button type='danger'>
                                     <Icon type="upload"/> <span style={{color:'white'}}>导入门店图</span>
-                                    <i class="iconfont icon-xxx"></i>
                                 </Button>
                             </Upload>
                         </Col>
@@ -76,7 +73,6 @@ export default class AddMenu extends React.Component {
                         <img src={this.state.url} style={{width:'50%',height:'100%'}}/>
                     </Row>
                 </Col>
-
             );
 };
 }
