@@ -130,8 +130,14 @@ export default class CallClear extends React.Component{
         });
     }
 
-    handleMixTable(){
-        console.log(111);
+    //拼桌叫号
+    handleMixTableCall(tables,queueInfos){
+        this.setState({
+            callInfo: {
+                orderNumber: queueInfos,
+                tableNumber: tables
+            }
+        });
     }
 
     componentWillMount(){
@@ -148,10 +154,10 @@ export default class CallClear extends React.Component{
                         <Col span={3}><Input type='input' ref='tableID' placeholder='001' onChange={this.handleInput.bind(this)}/></Col>
                         <Col span={1}></Col>
                         <Col span={2} ><Button type='primary' style={{border:"none",color:"white"}} onClick={this.handleCall.bind(this)}><span className='font-color'>呼叫排号</span></Button></Col>
-                        <Col span={5} style={{color:'orange',fontSize:'14px',paddingTop:"8px"}}><Icon type="notification"/>当前叫号:{this.state.callInfo.orderNumber} 顾客,请到 {this.state.callInfo.tableNumber} 桌就餐</Col>
-                        <Col span={5}></Col>
+                        <Col span={8} style={{color:'orange',fontSize:'14px',paddingTop:"8px"}}><Icon type="notification"/>当前叫号:{this.state.callInfo.orderNumber} 顾客,请到 {this.state.callInfo.tableNumber} 桌就餐</Col>
+                        <Col span={2}></Col>
                         <Col span={3}>
-                            <MixTableCall/>
+                            <MixTableCall handleMixTableCall={this.handleMixTableCall.bind(this)}/>
                         </Col>
                         <Col span={2}><Button type='primary' onClick={this.handlePause.bind(this)}><span className='font-color'>{this.state.pauseCall}</span></Button></Col>
                     </Row>

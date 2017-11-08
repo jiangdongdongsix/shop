@@ -6,7 +6,7 @@ const columns = [{
     dataIndex: 'queueId',
     width: '13%'
 },{
-    title: '卓类型',
+    title: '桌类型',
     dataIndex: 'tableType',
     width: '13%'
 },{
@@ -30,94 +30,23 @@ const columns = [{
     dataIndex: 'customerTel',
     width: '20%'
 }];
-const dataSource = [{
-    key:'0',
-    queueId:'C101',
-    tableType:'大桌',
-    eatNumber:'8',
-    seatFlag:'否',
-    queueStartTime:'11111',
-    customerName:'***',
-    customerTel:'11111'
-},{
-    key:'1',
-    queueId:'CA01',
-    tableType:'小桌',
-    eatNumber:'2',
-    seatFlag:'否',
-    queueStartTime:'22222',
-    customerName:'***',
-    customerTel:'22222'
-},{
-    key:'2',
-    queueId:'B101',
-    tableType:'中桌',
-    eatNumber:'6',
-    seatFlag:'否',
-    queueStartTime:'33333',
-    customerName:'***',
-    customerTel:'33333'
-},{
-    key:'3',
-    queueId:'C201',
-    tableType:'大桌',
-    eatNumber:'18',
-    seatFlag:'否',
-    queueStartTime:'4444',
-    customerName:'***',
-    customerTel:'44444'
-},{
-    key:'4',
-    queueId:'A201',
-    tableType:'小桌',
-    eatNumber:'8',
-    seatFlag:'否',
-    queueStartTime:'5555',
-    customerName:'***',
-    customerTel:'5555'
-},{
-    key:'5',
-    queueId:'C101',
-    tableType:'大桌',
-    eatNumber:'8',
-    seatFlag:'否',
-    queueStartTime:'11111',
-    customerName:'***',
-    customerTel:'12334'
-},{
-    key:'6',
-    queueId:'C101',
-    tableType:'大桌',
-    eatNumber:'8',
-    seatFlag:'否',
-    queueStartTime:'11111',
-    customerName:'***',
-    customerTel:'12334'
-},{
-    key:'7',
-    queueId:'C101',
-    tableType:'大桌',
-    eatNumber:'8',
-    seatFlag:'否',
-    queueStartTime:'11111',
-    customerName:'***',
-    customerTel:'12334'
-}]
-
 
 //叫号清桌页面  手动拼桌叫号
 export default class ShowTableQueue extends React.Component {
-    state = {
-        visible: false,
-        queueId:[],
-        queueInfo:{
+    constructor(props){
+        super(props);
+        this.state = {
+            visible: false,
+            queueId:[],
             queueInfos:"",
-            tables:""
-        }
+            tables:"",
+            queueInfo:[]
+        };
     };
 
     showModal = () => {
         this.setState({ visible: true });
+        this.initData();
     };
     handleCancel = () => {
         this.setState({ visible: false });
@@ -126,26 +55,71 @@ export default class ShowTableQueue extends React.Component {
 
     onChangeTables = (e) => {
         this.setState({
-            queueInfo:{
                 tables:e.target.value
-            }
        })
     }
 
 
     onChangeQueueInfos = (e) => {
         this.setState({
-            queueInfo:{
                 queueInfos:e.target.value
-            }
         })
     }
 
 
     submitQueue(){
-        console.log("hhh")
+        let that = this;
+        let tables = that.state.tables;
+        let queueInfos = that.state.queueInfos;
+        fetch('/iqesTT/queue/shareTable?tables='+tables+'&queueInfos='+queueInfos).then(function(response) {
+            return response.json();
+        }).then(function (jsonData) {
+            console.log(jsonData);
+            if(jsonData.ErrorCode === '0'){
+                console.log(11);
+                that.setState({
+                    queueInfos:jsonData.shareTableData.queueInfos,
+                    tables:jsonData.shareTableData.tables,
+                    visible: false
+                })
+            }
+            that.handleMixTableCall();
+            console.log(that.state.tables,that.state.queueInfos);
+        }).catch(function () {
+            console.log('拼桌叫号失败');
+        });
     }
 
+    handleMixTableCall(){
+        this.props.handleMixTableCall(this.state.tables,this.state.queueInfos);
+    }
+
+    initData(){
+        const that =this;
+        fetch('/iqesTT/queue/all', {
+        }).then(function(response) {
+            return response.json();
+        }).then(function(jsonData) {
+            let info = [];
+            console.log(jsonData);
+            jsonData.QueueInfos.map((k,index) => {
+                let obj = {
+                    queueId:k.queueId,
+                    tableType:k.tableType.describe,
+                    eatNumber:k.eatNumber,
+                    seatFlag:k.seatFlag === false ? '否' : '是',
+                    queueStartTime:k.queueStartTime,
+                    customerName:k.customerName,
+                    customerTel:k.customerTel,
+                };
+                info.push(obj);
+            });
+            console.log(info);
+            that.setState({queueInfo:info});
+        }).catch(function () {
+            console.log('出错了');
+        });
+    }
 
     render() {
         const rowSelection = {
@@ -157,10 +131,7 @@ export default class ShowTableQueue extends React.Component {
                     console.log(queue);
                 })
                 this.setState({
-                    queueInfo:{
-
                         queueInfos:queue
-                    }
                 })
             }
         };
@@ -174,6 +145,7 @@ export default class ShowTableQueue extends React.Component {
                     visible={this.state.visible}
                     title="手动叫号拼桌"
                     okText="确定"
+                    onCancel={this.handleCancel}
                     footer={null}
                     width='550px'
                 >
@@ -182,14 +154,14 @@ export default class ShowTableQueue extends React.Component {
                             请输入空桌号:
                         </Col>
                         <Col span={5}>
-                            <Input placeholder="请输入空桌编号" value={this.state.queueInfo.tables}   onChange={this.onChangeTables}/>
+                            <Input placeholder="请输入空桌编号" value={this.state.tables}   onChange={this.onChangeTables}/>
                         </Col>
                         <Col span={1}></Col>
                         <Col span={5} style={{paddingTop:"5px"}}>
                             请勾选客户排号:
                         </Col>
                         <Col span={5}>
-                            <Input placeholder="请勾选客户排号" value={this.state.queueInfo.queueInfos} onChange={this.onChangeQueueInfos}/>
+                            <Input placeholder="请勾选客户排号" value={this.state.queueInfos} onChange={this.onChangeQueueInfos}/>
                         </Col>
                         <Col span={1}></Col>
                         <Col span={2}>
@@ -197,16 +169,8 @@ export default class ShowTableQueue extends React.Component {
                         </Col>
                         <Col span={1}></Col>
                     </Row>
-                    <Table columns={columns} rowSelection={rowSelection} dataSource={dataSource}/>
+                    <Table columns={columns} rowSelection={rowSelection} dataSource={this.state.queueInfo}/>
                 </Modal>
-
-                {/*<CreateForm*/}
-                    {/*ref={this.saveFormRef}*/}
-                    {/*visible={this.state.visible}*/}
-                    {/*onCancel={this.handleCancel}*/}
-                    {/*onCreate={this.handleCreate}*/}
-                    {/*queueId={this.state.queueId}*/}
-                {/*/>*/}
             </div>
         );
     }

@@ -88,7 +88,6 @@ export default class TableState extends React.Component{
             console.log(jsonData);
             let tableInfo = [];
             jsonData.tableNumbers.map((k,index) =>{
-                console.log(k);
                 let obj ={
                     key: k.id,
                     state:  k.state === '1' ? '就餐中' :'空闲中',
