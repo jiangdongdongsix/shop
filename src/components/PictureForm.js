@@ -13,7 +13,7 @@ const error = () => {
 };
 class PicturesWall extends React.Component {
     state = {
-        displayArea:"0",
+        displayArea:"1",
         previewVisible: false,
         previewImage: '',
         fileList: [],
@@ -26,7 +26,7 @@ class PicturesWall extends React.Component {
             previewImage: file.url || file.thumbUrl,
             previewVisible: true,
         });
-    }
+    };
 
     handleRemove= (file) => {
         console.log(file.uid)
@@ -128,7 +128,6 @@ class PicturesWall extends React.Component {
                         <Col span={2}><p>请选择显示位置</p></Col>
                         <Col span={6}>
                             <Select  style={{ width: 120 }} onChange={this.handleChangeArea} value ={this.state.displayArea}>
-                                <Option value="0">请选择显示位置</Option>
                                 <Option value="1">直立机轮播区</Option>
                                 <Option value="2">APP图片</Option>
                             </Select>
