@@ -167,6 +167,7 @@ export default class TableState extends React.Component{
                 tableTypeDescribe: k.tableTypeDescribe,
                 tableNumber:'33'
             };
+            console.log(obj);
             dataInfo.push(obj);
             console.log(data);
         });
@@ -174,6 +175,7 @@ export default class TableState extends React.Component{
         this.setState({
             data:dataInfo
         })
+        console.log(dataInfo);
     }
 
 
