@@ -45,7 +45,7 @@ export default class TableInfo extends React.Component {
             jsonData.tableNumbers.map((k, index) => {
                 let obj ={
                     key: k.id,
-                    state:k.state === '1' ? '就餐中' :'空闲中',
+                    state:k.state==='1' ? '就餐中' :'空闲中',
                     tableName:k.tableName,
                     area: k.area,
                     tableTypeDescribe: k.tableTypeDescribe,
