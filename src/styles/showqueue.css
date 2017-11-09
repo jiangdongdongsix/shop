@@ -1,15 +1,18 @@
 .queuePanel{
     border:1px #D5DDE1 solid;
     padding-top:10px;
+    margin-right:20px;
 }
  .queueIcon{
     background-color:#4FB5F7;
     color:white;
     text-align:center;
-    height:28px;
-    line-height:28px;
+    height:40px;
+    line-height:40px;
     cursor: pointer;
+    font-size:16px;
 }
  .queueIcon .anticon:before{
      color:white;
+     font-size:18px;
  }

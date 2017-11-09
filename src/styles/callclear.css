@@ -2,7 +2,44 @@
     padding-top:10px;
     border-top: 2px solid #f9f7f7;
     color:white;
+    padding-left: 20px;
 }
 .font-color{
     color: white;
 }
+.inputTableNumber{
+    padding-top: 3px;
+    font-size: 16px;
+    color: #252631;
+    margin-right:20px;
+}
+.callTableNumberButton{
+    width: 100px;
+    height: 34px;
+    border:none;
+    color:white;
+    font-size: 13px;
+    background-color: #f27242;
+}
+
+.callTableNumberButton:active, .callTableNumberButton.active {
+    color: #fff;
+    background-color: #f27242;
+    border:none;
+}
+
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+    color: #fff;
+    background-color: #f27242;
+    border:none;
+}
+.callTableNumberInfo{
+    color:#f2ae42;
+    font-size:20px;
+}
+
+.callTableNumberInfo .iconfont{
+    color:#f2ae42;
+    font-size:16px;
+}
+

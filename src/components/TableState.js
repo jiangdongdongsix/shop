@@ -182,7 +182,7 @@ export default class TableState extends React.Component{
     render(){
         return (
             <Layout style={{backgroundColor:'white'}}>
-                <Content style={{border:"2px solid #f9f7f7",padding:20, margin:24}}>
+                <Content style={{border:"1px solid #cfd8dc",padding:'20px 10px 10px 20px'}}>
                     <Row>
                         <Col span={24}>
                             <Row>

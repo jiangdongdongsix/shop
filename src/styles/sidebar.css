@@ -11,13 +11,39 @@
     height: 34px;
     line-height: 34px;
 }
+.sideTitleColor{
+    font-family: 'Microsoft YaHei';
+    font-size:22px;
+    color: #ededed;
+}
 .sideBgColor{
     background-color:#2E3441;
     color:#f0f0f0;
 }
-.sideColor{
-    color: #ededed;
+
+.sideBgColor .ant-menu-item-selected{
+    font-size:14px;
+    color:#ffffff;
 }
+.sideColor{
+    color: #f0f0f0;
+    font-family:'Microsoft YaHei';
+    font-size:14px;
+}
+
+.sideSecondTitle{
+    padding-left:24px;
+    font-size:14px;
+    color:#8f98aa;
+    opacity:0.6;
+    filter:Alpha(opacity=60)
+}
+
+.sideBgColor .iconfont{
+    margin-right:6px;
+    font-size:18px;
+}
+
 .sideCenter{
     text-align:center;
 }

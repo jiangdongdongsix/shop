@@ -8,7 +8,7 @@ const SubMenu = Menu.SubMenu;
 export default class HeaderCustom extends React.Component{
     render(){
         return (
-                <Header  style={{backgroundColor:'white',textAlign:'right',verticalAlign:'bottom',borderBottom:"2px solid #f9f7f7"}}>
+                <Header  style={{backgroundColor:'white',textAlign:'right',verticalAlign:'bottom',borderBottom:"2px solid #f9f7f7",height:'60px'}}>
                     <span>您好，欢迎登录</span>
                 </Header>
         )

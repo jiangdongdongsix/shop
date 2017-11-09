@@ -103,16 +103,16 @@ export default class CallClear extends React.Component{
                         <div className="queuePanel">
                             <Row>
                                 <Col span={1}></Col>
-                                <Col span={23}>{queue.tableTypeDescribe}({queue.eatMinNumber}-{queue.eatMaxNumber}人)</Col>
+                                <Col span={23} style={{fontSize:'16px','color':'#516b77'}}>{queue.tableTypeDescribe}({queue.eatMinNumber}-{queue.eatMaxNumber}人)</Col>
                             </Row>
                             <Row style={{padding:"10px 0px 7px 0px"}}>
                                 <Col span={2}></Col>
-                                <Col span={10}>
-                                    <img src={TableQueue} alt="" style={{width:"50%",height:"50%"}}/>
+                                <Col span={8}>
+                                    <img src={TableQueue} alt="" style={{width:"60%",height:"60%"}}/>
                                 </Col>
-                                <Col span={10}>
+                                <Col span={12}>
                                     <div>
-                                        <h3>已排{queue.queueNumbers}桌</h3>
+                                        <span style={{fontSize:'30px',color:'#444'}}>已排{queue.queueNumbers}桌</span>
                                         <p>即将叫号{queue.arrivingQueueInfo}</p>
                                     </div>
                                 </Col>
@@ -120,13 +120,12 @@ export default class CallClear extends React.Component{
                             <Row>
                                 <Col span={24}>
                                     <p className="queueIcon" onClick={this.showModal.bind(this,queue.tableTypeDescribe)}>
-                                        <Icon type="search" />查看队列
+                                        <Icon type="search" style={{padding:'0px 10px'}}/>查看队列
                                     </p>
                                 </Col>
                             </Row>
                         </div>
                     </Col>
-                    <Col span={1}></Col>
                 </div>)
         }
         const CreateTable = Form.create()(

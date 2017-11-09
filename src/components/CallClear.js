@@ -149,20 +149,16 @@ export default class CallClear extends React.Component{
                 <HeaderCustom/>
                 <Content className="Call-line">
                     <Row>
-                        <Col span={1}></Col>
-                        <Col span={2} style={{paddingTop:"5px"}}>输入桌ID号:</Col>
-                        <Col span={3}><Input type='input' ref='tableID' placeholder='001' onChange={this.handleInput.bind(this)}/></Col>
-                        <Col span={1}></Col>
-                        <Col span={2} ><Button type='primary' style={{border:"none",color:"white"}} onClick={this.handleCall.bind(this)}><span className='font-color'>呼叫排号</span></Button></Col>
-                        <Col span={8} style={{color:'orange',fontSize:'14px',paddingTop:"8px"}}><Icon type="notification"/>当前叫号:{this.state.callInfo.orderNumber} 顾客,请到 {this.state.callInfo.tableNumber} 桌就餐</Col>
-                        <Col span={2}></Col>
+                        <Col span={2} className='inputTableNumber'>输入桌ID号:</Col>
+                        <Col span={3} style={{marginRight:'22px',paddingTop:'2px'}}><Input type='input' ref='tableID' placeholder='001' onChange={this.handleInput.bind(this)}/></Col>
+                        <Col span={3} ><Button type='primary' className='callTableNumberButton' onClick={this.handleCall.bind(this)}><span className='font-color'>呼叫排号</span></Button></Col>
+                        <Col span={9} className='callTableNumberInfo'><i class="iconfont">&#xe612;</i>当前叫号:{this.state.callInfo.orderNumber} 顾客,请到 {this.state.callInfo.tableNumber} 桌就餐</Col>
                         <Col span={3}>
                             <MixTableCall handleMixTableCall={this.handleMixTableCall.bind(this)}/>
                         </Col>
-                        <Col span={2}><Button type='primary' onClick={this.handlePause.bind(this)}><span className='font-color'>{this.state.pauseCall}</span></Button></Col>
+                        <Col span={2}><Button type='primary' className='callTableNumberButton' onClick={this.handlePause.bind(this)}><span className='font-color'>{this.state.pauseCall}</span></Button></Col>
                     </Row>
                     <Row>
-                        <Col span={1}></Col>
                         <Col>
                             <ShowQueue/>
                         </Col>

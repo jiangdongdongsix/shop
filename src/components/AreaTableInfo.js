@@ -74,8 +74,8 @@ export default class TableInfo extends React.Component {
         for(let table in this.state.Info){
             AreaTable.push(
                 <div>
-                    <Col span={2}>
-                        <Button type="primary" style={{padding:"0 10px"}}  onClick={this.handleArea.bind(this,table)}>
+                    <Col span={3} className='areaTableInfo'>
+                        <Button type="primary" className='areaButton' onClick={this.handleArea.bind(this,table)}>
                             <span style={{color:"white"}}>{table}区 {this.state.Info[table]>0 ? '空'+this.state.Info[table]+'桌' : '已满' }</span>
                         </Button>
                     </Col>
@@ -84,7 +84,7 @@ export default class TableInfo extends React.Component {
         return (
             <div>
                 <Row>
-                    <Col span={2} style={{paddingTop:"5px"}}>
+                    <Col span={2} style={{paddingTop:"5px",fontSize:'15px'}}>
                         区域桌信息:
                     </Col>
                     {AreaTable}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table,Button,Form,Input,Modal,Row,Col } from 'antd'
+import './../styles/callclear.css'
 const FormItem = Form.Item;
 const columns = [{
     title: '排队号',
@@ -138,7 +139,7 @@ export default class ShowTableQueue extends React.Component {
 
         return (
             <div>
-                <Button type='primary' onClick={this.showModal}>
+                <Button type='primary' onClick={this.showModal} className='callTableNumberButton'>
                     <span style={{color:"white"}}>手动叫号拼桌</span>
                 </Button>
                 <Modal

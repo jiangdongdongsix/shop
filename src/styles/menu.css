@@ -5,9 +5,8 @@
 }
 
 .Menu-table{
-    border: 1px solid #e8e4e4;
-    padding: 10px;
-    margin: 10px 0;
+    border: 1px solid #cfd8dc;
+    margin-top:10px;
 }
 
 .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
@@ -27,4 +26,23 @@ table .anticon:before {
 
 .ant-switch-checked {
     background-color: #f04134;
+}
+.areaButton{
+    width: 120px;
+    height: 34px;
+    background-color: #4ebd65;
+    border: none;
+    font-size:16px;
+    color:#aab0b6;
+}
+
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+    color:#aab0b6;
+    background-color: #4ebd65;
+    border: none;
+}
+
+.areaTableInfo{
+    width: 120px;
+    margin-right: 10px;
 }
