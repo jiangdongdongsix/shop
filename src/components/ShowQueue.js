@@ -137,33 +137,19 @@ export default class CallClear extends React.Component{
                     </Col>
                 </div>)
         }
-        const CreateTable = Form.create()(
-            (props) => {
-                const { visible, onCancel, onCreate,tableTypeDescribe } = props;
-                return (
-                    <Modal
-                        visible={visible}
-                        title="队列信息"
-                        onCancel={onCancel}
-                        onOk={onCreate}
-                        footer={null}
-                    >
-                        <ShowTableQueue tableTypeDescribe={tableTypeDescribe}/>
-                    </Modal>
-                );
-            }
-        );
         return (
             <Layout style={{backgroundColor:'white',padding:"20px 0px"}}>
                 <Content>
                     <div>
                         {queueElements}
-                        <CreateTable
+                        <Modal
                             visible={this.state.visible}
-                            tableTypeDescribe={this.state.tableTypeDescribe}
+                            title="队列信息"
                             onCancel={this.handleCancel}
-                            onCreate={this.handleCreate}
-                        />
+                            footer={null}
+                        >
+                            <ShowTableQueue tableTypeDescribe={this.state.tableTypeDescribe}/>
+                        </Modal>
                     </div>
                 </Content>
             </Layout>

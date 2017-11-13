@@ -32,9 +32,6 @@ export default class CallClear extends React.Component{
                 tableNumber: '--',
             }
         });
-        if(that.state.callInfo.tableInfo === undefined){
-            message.info('请输入餐桌编号');
-        }else{
             fetch('/iqesTT/queue/arrivingCustomer?tableName='+ this.state.tableID).then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
@@ -48,7 +45,6 @@ export default class CallClear extends React.Component{
             }).catch(function () {
                 console.log('叫号失败');
             });
-        }
     }
 
     handleInput (event) {
