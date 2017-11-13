@@ -12,7 +12,7 @@
     cursor: pointer;
     font-size:16px;
 }
- .queueIcon .anticon:before{
-     color:white;
-     font-size:18px;
- }
+.queueIcon .anticon:before{
+    color:white;
+    font-size:18px;
+}

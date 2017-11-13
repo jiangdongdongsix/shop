@@ -139,7 +139,7 @@ export default class ShowTableQueue extends React.Component {
 
         return (
             <div>
-                <Button type='primary' onClick={this.showModal} className='callTableNumberButton'>
+                <Button type='primary' onClick={this.showModal} className='callTableNumberButton' style={{width:'120px',marginRight:'22px'}}>
                     <span style={{color:"white"}}>手动叫号拼桌</span>
                 </Button>
                 <Modal

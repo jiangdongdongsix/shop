@@ -55,7 +55,7 @@
      background-color: #20242D;
     color:#ffffff;
 }
-.anticon:before{
+.whiteIcon .anticon:before{
     color:white;
     font-size:14px;
 }

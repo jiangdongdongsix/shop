@@ -8,20 +8,10 @@ const SubMenu = Menu.SubMenu;
 
 
 export default class Side extends React.Component {
-    state = {
-                collapsed: false,
-    };
-    onCollapse = (collapsed) => {
-        console.log(collapsed);
-        this.setState({ collapsed });
-    }
     render() {
         return (
                 <Sider
-                    collapsible
-                    breakpoint="lg"
-                    collapsed={this.state.collapsed}
-                    onCollapse={this.onCollapse}
+                    collapsible={false}
                     className="sideBgColor"
                 >
                     <Menu theme="dark" defaultSelectedKeys={['1']}  className="sideBgColor">

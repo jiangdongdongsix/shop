@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import { Button,Input,Modal,Form } from 'antd';
 import './../styles/menu.css'
 const FormItem = Form.Item;
@@ -114,7 +114,7 @@ export default class AddTable extends React.Component {
     render() {
         return (
             <div>
-                <Button type="danger" icon="file-add" onClick={this.showModal}>
+                <Button type="danger" icon="file-add" onClick={this.showModal} className='whiteIcon'>
                     <span style={{color:"white"}}>新增餐桌</span>
                 </Button>
                 <CreateForm

@@ -36,7 +36,7 @@ table .anticon:before {
     color:#aab0b6;
 }
 
-.ant-btn-primary:hover, .ant-btn-primary:focus {
+.areaTableInfo .ant-btn-primary:hover, .areaTableInfo .ant-btn-primary:focus {
     color:#aab0b6;
     background-color: #4ebd65;
     border: none;

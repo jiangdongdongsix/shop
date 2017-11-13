@@ -305,7 +305,7 @@ export default class TableTypeForm extends React.Component{
                                 </Col>
                                 <Col span={3}></Col>
                                 <Col span={2}>
-                                    <Button type="danger" icon="code-o">
+                                    <Button type="danger" icon="code-o" className='whiteIcon'>
                                         <span style={{color:"white"}}>导入餐桌</span>
                                     </Button>
                                 </Col>

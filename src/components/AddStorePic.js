@@ -60,7 +60,7 @@ export default class AddMenu extends React.Component {
                     <Row>
                         <Col span={12}>
                             <Upload {...props}>
-                                <Button type='danger'>
+                                <Button type='danger' className='whiteIcon'>
                                     <Icon type="upload"/> <span style={{color:'white'}}>导入门店图</span>
                                 </Button>
                             </Upload>

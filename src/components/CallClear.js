@@ -27,24 +27,28 @@ export default class CallClear extends React.Component{
         let that = this;
         that.setState({
             callInfo:{
-                tableID: '',
+                tableID:'',
                 orderNumber: '--',
                 tableNumber: '--',
             }
         });
-        fetch('/iqesTT/queue/arrivingCustomer?tableName='+ this.state.tableID).then(function(response) {
-            return response.json();
-        }).then(function (jsonData) {
-            console.log(jsonData);
-            that.setState({callInfo: {
-                    orderNumber: jsonData.extractNumber.tableNumber.tableType.tableTypeName + jsonData.extractNumber.id,
-                    tableNumber: jsonData.extractNumber.tableNumber.name
-                }
-                }
-            );
-        }).catch(function () {
-            console.log('叫号失败');
-        });
+        if(that.state.callInfo.tableInfo === undefined){
+            message.info('请输入餐桌编号');
+        }else{
+            fetch('/iqesTT/queue/arrivingCustomer?tableName='+ this.state.tableID).then(function(response) {
+                return response.json();
+            }).then(function (jsonData) {
+                console.log(jsonData);
+                that.setState({callInfo: {
+                        orderNumber: jsonData.extractNumber.tableNumber.tableType.tableTypeName + jsonData.extractNumber.id,
+                        tableNumber: jsonData.extractNumber.tableNumber.name
+                    }
+                    }
+                );
+            }).catch(function () {
+                console.log('叫号失败');
+            });
+        }
     }
 
     handleInput (event) {

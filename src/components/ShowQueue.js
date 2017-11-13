@@ -54,6 +54,7 @@ export default class CallClear extends React.Component{
 
     showModal = (tableTypeDescribe) => {
         console.log(tableTypeDescribe);
+        clearInterval(this.timer);
         this.setState({
             visible: true,
             tableTypeDescribe:tableTypeDescribe
@@ -71,7 +72,6 @@ export default class CallClear extends React.Component{
         fetch('/iqesTT/restaurant/tableType/queue').then(function(response) {
             return response.json();
         }).then(function (jsonData) {
-            console.log(jsonData);
             let len = jsonData.tableTypeDTOs.length;
             let queueInfo = [];
             for(let i=0;i<len;i++){
@@ -84,14 +84,23 @@ export default class CallClear extends React.Component{
                 });
             }
             that.setState({Info:queueInfo});
+            // console.log(this.state.Info);
+            // console.log(this.state.Info[0].queueNumbers);
         }).catch(function () {
             console.log('查看排队失败');
         });
     }
 
-
     componentWillMount(){
         this.handleQueueInfo();
+    }
+    componentDidMount(){
+        this.timer = setInterval(()=>{
+            this.handleQueueInfo()},2000)
+    }
+
+    componentWillUnmount () {
+        clearInterval(this.timer)
     }
 
     render(){
