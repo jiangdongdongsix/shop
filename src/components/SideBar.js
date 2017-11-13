@@ -15,8 +15,8 @@ export default class Side extends React.Component {
                     className="sideBgColor"
                 >
                     <h2 className="sideTitleColor sideCenter">排队管理客户端</h2>
-                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" className="sideBgColor">
-                        <Menu.Item key="1"  style={{borderLeft:'5px #f27241 solid'}}>
+                    <Menu theme="dark" defaultSelectedKeys={['1']} className="sideBgColor">
+                        <Menu.Item key="1">
                             <Link to="/callnumber">
                                 <i className="iconfont">&#xe616;</i>
                                 <span className="sideColor">叫号清桌</span>
