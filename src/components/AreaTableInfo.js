@@ -12,6 +12,7 @@ export default class TableInfo extends React.Component {
                     number:''
                 },
             data:[{
+                key:'',
                 tableName: "",
                 area: "",
                 state: "",
@@ -52,6 +53,7 @@ export default class TableInfo extends React.Component {
                     tableNumber:'3',
                 };
                 areaInfo.push(obj);
+                console.log('obj'+obj);
             });
                 that.setState({data:areaInfo});
                 that.handleAreaTable();
@@ -73,7 +75,7 @@ export default class TableInfo extends React.Component {
         let AreaTable = [];
         for(let table in this.state.Info){
             AreaTable.push(
-                <div>
+                <div key={Math.random()}>
                     <Col span={3} className='areaTableInfo'>
                         <Button type="primary" className='areaButton' onClick={this.handleArea.bind(this,table)}>
                             <span style={{color:"white"}}>{table}区 {this.state.Info[table]>0 ? '空'+this.state.Info[table]+'桌' : '已满' }</span>

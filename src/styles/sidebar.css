@@ -15,6 +15,7 @@
     font-family: 'Microsoft YaHei';
     font-size:22px;
     color: #ededed;
+    padding:15px 0px;
 }
 .sideBgColor{
     background-color:#2E3441;
@@ -36,7 +37,7 @@
     font-size:14px;
     color:#8f98aa;
     opacity:0.6;
-    filter:Alpha(opacity=60)
+    filter:Alpha(opacity=60);
 }
 
 .sideBgColor .iconfont{
@@ -67,4 +68,5 @@
 a .anticon:before {
      color: white;
 }
+
 

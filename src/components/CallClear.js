@@ -42,8 +42,10 @@ export default class CallClear extends React.Component{
                     }
                     }
                 );
+                message.success('叫号成功');
             }).catch(function () {
                 console.log('叫号失败');
+                message.info('叫号失败');
             });
     }
 
@@ -152,7 +154,7 @@ export default class CallClear extends React.Component{
                         <Col span={2} className='inputTableNumber'>输入桌ID号:</Col>
                         <Col span={3} style={{marginRight:'22px',paddingTop:'2px'}}><Input type='input' ref='tableID' placeholder='001' onChange={this.handleInput.bind(this)}/></Col>
                         <Col span={3} ><Button type='primary' className='callTableNumberButton' onClick={this.handleCall.bind(this)}><span className='font-color'>呼叫排号</span></Button></Col>
-                        <Col span={9} className='callTableNumberInfo'><i class="iconfont">&#xe612;</i>当前叫号:{this.state.callInfo.orderNumber} 顾客,请到 {this.state.callInfo.tableNumber} 桌就餐</Col>
+                        <Col span={9} className='callTableNumberInfo'><i className="iconfont">&#xe612;</i>当前叫号:{this.state.callInfo.orderNumber} 顾客,请到 {this.state.callInfo.tableNumber} 桌就餐</Col>
                         <Col span={3}>
                             <MixTableCall handleMixTableCall={this.handleMixTableCall.bind(this)}/>
                         </Col>
