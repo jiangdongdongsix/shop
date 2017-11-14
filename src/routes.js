@@ -11,6 +11,8 @@ import Verify from './containers/waitVerify';
 import Menu from './containers/updateMenu';
 import Table from './containers/tableSet';
 import tableTyplePage from './containers/tableTyplePage';
+import AreaFormPage from './containers/areaFormPage';
+
 
 
 const routes = (
@@ -22,6 +24,7 @@ const routes = (
           <Route path='/menu' component={Menu} />
           <Route path='/tableset' component={Table} />
           <Route path='/tabletype' component={tableTyplePage} />
+          <Route path="/area" component = {AreaFormPage}/>
         </div>
 );
 

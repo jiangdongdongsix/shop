@@ -59,6 +59,12 @@ export default class Side extends React.Component {
                             <span className="sideColor">菜单信息上传更新</span>
                             </Link>
                         </Menu.Item>
+                        <Menu.Item key="7">
+                            <Link to="/area">
+                                <i class="iconfont">&#xe604;</i>
+                                <span className="sideColor">区域信息设置</span>
+                            </Link>
+                        </Menu.Item>
                     </Menu>
                 </Sider>
         );
