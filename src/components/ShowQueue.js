@@ -40,6 +40,7 @@ export default class CallClear extends React.Component{
             visible: false,
             Info:[
                 {
+                    key:'',
                     arrivingQueueInfo:'',
                     eatMaxNumber:'',
                     eatMinNumber:'',
@@ -76,6 +77,7 @@ export default class CallClear extends React.Component{
             let queueInfo = [];
             for(let i=0;i<len;i++){
                 queueInfo.push({
+                        key:i,
                         tableTypeDescribe:jsonData.tableTypeDTOs[i].tableTypeDescribe,
                         eatMaxNumber: jsonData.tableTypeDTOs[i].eatMaxNumber,
                         eatMinNumber: jsonData.tableTypeDTOs[i].eatMinNumber,
@@ -84,8 +86,6 @@ export default class CallClear extends React.Component{
                 });
             }
             that.setState({Info:queueInfo});
-            // console.log(this.state.Info);
-            // console.log(this.state.Info[0].queueNumbers);
         }).catch(function () {
             console.log('查看排队失败');
         });
@@ -107,7 +107,7 @@ export default class CallClear extends React.Component{
         const queueElements=[];      //保存渲染以后 JSX的数组
         for(let queue of this.state.Info){
             queueElements.push(
-                <div>
+                <div key={queue.key}>
                     <Col span={6}  style={{paddingBottom:'10px'}}>
                         <div className="queuePanel">
                             <Row>
@@ -137,19 +137,33 @@ export default class CallClear extends React.Component{
                     </Col>
                 </div>)
         }
+        const CreateTable = Form.create()(
+            (props) => {
+                const { visible, onCancel, onCreate,tableTypeDescribe } = props;
+                return (
+                    <Modal
+                        visible={visible}
+                        title="队列信息"
+                        onCancel={onCancel}
+                        onOk={onCreate}
+                        footer={null}
+                    >
+                        <ShowTableQueue tableTypeDescribe={tableTypeDescribe}/>
+                    </Modal>
+                );
+            }
+        );
         return (
             <Layout style={{backgroundColor:'white',padding:"20px 0px"}}>
                 <Content>
                     <div>
                         {queueElements}
-                        <Modal
+                        <CreateTable
                             visible={this.state.visible}
-                            title="队列信息"
+                            tableTypeDescribe={this.state.tableTypeDescribe}
                             onCancel={this.handleCancel}
-                            footer={null}
-                        >
-                            <ShowTableQueue tableTypeDescribe={this.state.tableTypeDescribe}/>
-                        </Modal>
+                            onCreate={this.handleCreate}
+                        />
                     </div>
                 </Content>
             </Layout>

@@ -117,6 +117,7 @@ export default class AddTable extends React.Component {
                 <Button type="danger" icon="file-add" onClick={this.showModal} className='whiteIcon'>
                     <span style={{color:"white"}}>新增餐桌</span>
                 </Button>
+
                 <CreateForm
                     ref={this.saveFormRef}
                     visible={this.state.visible}
