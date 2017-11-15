@@ -75,7 +75,17 @@ export default class TableTypeForm extends React.Component{
             message.error('取消删除');
         };
 
-        this.columns = [{
+        this.columns = [
+            {
+                title: '菜品图片',
+                dataIndex: 'menuPic',
+                width: '10%',
+                render:(text,record,index)=>{
+                    return(
+                        <img src={''}/>
+                    )
+                }
+            },{
             title: '菜品名称',
             dataIndex: 'menuName',
             width: '15%',
@@ -98,7 +108,7 @@ export default class TableTypeForm extends React.Component{
         },{
             title: '描述',
             dataIndex: 'describe',
-            width: '23%',
+            width: '18%',
             render: (text, record, index) => this.renderColumns(this.state.data, index, 'describe', text),
         },{
             title: '操作',

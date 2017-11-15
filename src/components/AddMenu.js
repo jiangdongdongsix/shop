@@ -1,14 +1,22 @@
 import React from 'react';
-import { Button,Input,Modal,Form } from 'antd';
+import { Button,Input,Modal,Form,Upload,Icon,message} from 'antd';
 import './../styles/menu.css'
 const FormItem = Form.Item;
 const CreateForm = Form.create()(
     (props) => {
-        const { visible, onCancel, onCreate, form } = props;
+        const { visible, onCancel, onCreate, form} = props;
         const { getFieldDecorator } = form;
         const formItemLayout = {
             labelCol: { span: 4 },
             wrapperCol: { span: 14 },
+        };
+        this.normFile = (e) => {
+            console.log('Upload event:', e);
+            console.log(JSON.stringify(e));
+            if (Array.isArray(e)) {
+                return e;
+            }
+            return e && e.fileList;
         };
         return (
             <Modal
@@ -18,7 +26,7 @@ const CreateForm = Form.create()(
                 onCancel={onCancel}
                 onOk={onCreate}
             >
-                <Form layout='horizontal'>
+                <Form layout='horizontal' onSubmit={this.handleSubmit} encType="multipart/form-data">
                     <FormItem label="菜品名称" {...formItemLayout}>
                         {getFieldDecorator('name', {
                             rules: [{ required: true, message: '请输入菜品名称' }],
@@ -45,6 +53,19 @@ const CreateForm = Form.create()(
                             rules: [{ required: true, message: '请输入会员价格' }],
                         })(
                             <Input />
+                        )}
+                    </FormItem>
+                    <FormItem label="菜品图片" {...formItemLayout}>
+                        {getFieldDecorator('menuPic', {
+                            valuePropName: 'fileList',
+                            getValueFromEvent: this.normFile,
+
+                        })(
+                            <Upload name="menuPic">
+                                <Button>
+                                    <Icon type="upload" /> Click to upload
+                                </Button>
+                            </Upload>
                         )}
                     </FormItem>
                     <FormItem label="菜品描述" {...formItemLayout}>
@@ -75,28 +96,40 @@ export default class AddMenu extends React.Component {
         this.setState({ visible: false });
     };
 
-    handleCreate = () => {
+    saveFormRef = (form) => {
+        this.form = form;
+    };
+    handleSubmit = (e) => {
         const that = this;
-        const form = this.form;
+        const form = that.form;
+        e.preventDefault();
         form.validateFields((err, values) => {
-            if (err) {
-                return;
+            if (!err) {
+                console.log('Received values of form: ', values);
             }
-            console.log('Received values of form: ', values);
             let addMenu = {
+                menuPhoto:values.menuPic[0],
                 menuName:values.name,
                 menuPrice:values.Price,
                 menuType:values.props,
                 memberMenuPrice:values.VipPrice,
                 describe:values.describe
             };
-            fetch('/iqesTT/restaurant/menu', {
+            let addMenuData = new FormData();
+            addMenuData.append('menuPhoto',values.menuPic[0]);
+            addMenuData.append('menuName',values.name);
+            addMenuData.append('menuPrice',values.Price);
+            addMenuData.append('menuType',values.props);
+            addMenuData.append('memberMenuPrice',values.VipPrice);
+            addMenuData.append('describe',values.describe);
+            console.log(addMenuData.length);
+            fetch('/iqesTT/restaurant/menu/testSave', {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Accept':'application/json,text/plain,*/*',
+                    'Content-Type': 'multipart/form-data',
                 },
-                body: JSON.stringify(addMenu)
+                body:addMenuData
             }).then(function(response) {
                 console.log(addMenu);
                 console.log(response);
@@ -112,10 +145,8 @@ export default class AddMenu extends React.Component {
             form.resetFields();
             this.setState({ visible: false });
         });
-    }
-    saveFormRef = (form) => {
-        this.form = form;
-    }
+    };
+
     render() {
         return (
             <div>
@@ -126,7 +157,7 @@ export default class AddMenu extends React.Component {
                     ref={this.saveFormRef}
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
-                    onCreate={this.handleCreate}
+                    onCreate={this.handleSubmit}
                 />
             </div>
         );
