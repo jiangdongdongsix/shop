@@ -1,11 +1,16 @@
-import React from 'react';
+import React,{ Component } from 'react'
 import { Table,Layout,Button,Row,Col,Input,Switch,Popconfirm,Icon,message } from 'antd';
 import HeaderCustom from './HeaderCustom'
-import AddTableType from './AddTableType'
+import AddArea from './AddArea';
 import './../styles/menu.css'
 const {Content} = Layout;
 const Search = Input.Search;
 
+/**
+ * 可编辑输入框
+ * @auther jiangdongdong
+ * @since 2017-11-14 15：12
+ */
 class EditableCell extends React.Component {
     state = {
         value: this.props.value,
@@ -57,14 +62,18 @@ class EditableCell extends React.Component {
     }
 }
 
-export default class TableTypeForm extends React.Component{
+
+/**
+ * 区域编辑
+ * @author jiangdongdong
+ * @since 2017-11-14 15:13
+ */
+export default class AreaForm extends React.Component{
     constructor(props){
-        console.log("constructor");
         super(props);
         this.state = {
             visible: false,
             data:[],
-            flag:true
         };
 
         this.confirm = this.confirm.bind(this);
@@ -76,41 +85,26 @@ export default class TableTypeForm extends React.Component{
         };
 
         this.columns = [{
-            title: '桌类型代码',
-            dataIndex: 'tableTypeName',
-            width: '10%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'tableTypeName', text),
-        },{
-            title: '桌类型名称',
-            dataIndex: 'describe',
+            title: '序列',
+            dataIndex: 'id',
             width: '15%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'describe', text),
-        }, {
-            title: '最小用餐人数',
-            dataIndex: 'eatMinNumber',
-            width: '15%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'eatMinNumber', text),
-        }, {
-            title: '最大用餐人数',
-            dataIndex: 'eatMaxNumber',
-            width: '13%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'eatMaxNumber', text),
+            render: (text, record, index) => this.renderColumns(this.state.data, index, 'id', text),
         },{
-            title: '每桌用餐时间',
-            dataIndex: 'eatTime',
-            width: '13%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'eatTime', text),
-        },{
-            title: '提前推送桌数',
-            dataIndex:'pushNumbers',
-            width: '13%',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'pushNumbers', text),
+            title: '区域名称',
+            dataIndex: 'areaName',
+            width: '25%',
+            render: (text, record, index) => this.renderColumns(this.state.data, index, 'areaName', text),
+        }, {
+            title: '区域描述',
+            dataIndex: 'areaDescribe',
+            width: '45%',
+            render: (text, record, index) => this.renderColumns(this.state.data, index, 'areaDescribe', text),
         },{
             title: '操作',
             dataIndex: 'operation',
             render:(text, record, index)=>{
                 const Id = record.key;
-                const { editable } = this.state.data[index].tableTypeName;
+                const { editable } = this.state.data[index].areaName;
                 return(
                     <div className="editable-row-operations">
                         {
@@ -118,7 +112,7 @@ export default class TableTypeForm extends React.Component{
                                 <span>
                                <a onClick={() => this.editDone(index, 'save')}>保存</a>
                                     {/*<Popconfirm title="Sure to cancel?" onConfirm={() => this.editDone(index, 'cancel')}>*/}
-                                <a onClick={() => this.editDone(index, 'cancel')} style={{marginLeft: 20}}>取消</a>
+                                    <a onClick={() => this.editDone(index, 'cancel')} style={{marginLeft: 20}}>取消</a>
                                     {/*</Popconfirm>*/}
                             </span>
                                 :
@@ -159,7 +153,6 @@ export default class TableTypeForm extends React.Component{
             }
         });
         this.setState({ data }, () => {
-            console.log("99999");
             Object.keys(data[index]).forEach((item) => {
                 if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
                     delete data[index][item].status;
@@ -173,16 +166,12 @@ export default class TableTypeForm extends React.Component{
     updateDate(data){
         const info = {
             id:data.key,
-            eatMaxNumber:data.eatMaxNumber.value,
-            describe:data.describe.value,
-            eatMinNumber:data.eatMinNumber.value,
-            eatTime:data.eatTime.value,
-            tableTypeName:data.tableTypeName.value,
-            pushNumbers:data.pushNumbers.value
+            areaName:data.areaName.value,
+            areaDescribe:data.areaDescribe.value,
         }
 
         console.log(JSON.stringify(info));
-        fetch("/iqesTT/restaurant/tableType",{
+        fetch("/iqesTT/restaurant/area",{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -201,7 +190,6 @@ export default class TableTypeForm extends React.Component{
 
     }
 
-
     renderColumns(data, index, key, text) {
         const { editable, status } = data[index][key];
         if (typeof editable === 'undefined') {
@@ -217,7 +205,6 @@ export default class TableTypeForm extends React.Component{
         );
     }
 
-
     handleChange(key, index, value) {
         console.log("888");
         const { data } = this.state;
@@ -228,42 +215,31 @@ export default class TableTypeForm extends React.Component{
     getdata(){
         const that = this;
         let dataList = [];
-        fetch("/iqesTT/restaurant/tableType/all")
+        fetch("/iqesTT/restaurant/area/all")
             .then(function(response) {
                 return response.json();
             }).then(function (jsonData) {
             console.log(JSON.stringify(jsonData))
             console.log(jsonData)
-            jsonData.tableTypes.map((k,index) =>{
+            jsonData.areas.map((k,index) =>{
                 let obj ={
                     key: k.id,
-                    tableTypeName: {
+                    id:{
                         editable: false,
-                        value: k.tableTypeName,
+                        value: k.id,
                     },
-                    eatMinNumber:  {
+                    areaName: {
                         editable: false,
-                        value: k.eatMinNumber,
+                        value: k.areaName,
                     },
-                    eatMaxNumber: {
+                    areaDescribe:  {
                         editable: false,
-                        value: k.eatMaxNumber,
+                        value: k.areaDescribe,
                     },
-                    eatTime: {
-                        editable: false,
-                        value: k.eatTime,
-                    },
-                    pushNumbers:{
-                        editable: false,
-                        value: k.pushNumbers,
-                    },
-                    describe:{
-                        editable: false,
-                        value: k.describe,
-                    },
+
                 };
                 dataList.push(obj);
-            })
+            });
             that.setState({
                 data:dataList
             })
@@ -279,14 +255,14 @@ export default class TableTypeForm extends React.Component{
 
     confirm(id){
         const that = this;
-        fetch("/iqesTT/restaurant/tableType?id="+id, {
+        fetch("/iqesTT/restaurant/area?id="+id, {
             method: 'DELETE'
         }).then(function(response) {
             return response.json();
         }).then(function (jsonData) {
-          if(jsonData.ErrorCode ==='0'){
-              that.getdata();
-          }
+            if(jsonData.ErrorCode ==='0'){
+                that.getdata();
+            }
         }).catch(function () {
             console.log('出错了');
         });
@@ -301,6 +277,7 @@ export default class TableTypeForm extends React.Component{
             }
         }
     }
+
     render(){
         const { data } = this.state;
         const dataSource = data.map((item) => {
@@ -311,7 +288,8 @@ export default class TableTypeForm extends React.Component{
             return obj;
         });
         const columns = this.columns;
-        return (
+
+        return(
             <Layout style={{backgroundColor:'white'}}>
                 <HeaderCustom/>
                 <Content style={{border:"2px solid #f9f7f7",padding:20, margin:24}}>
@@ -320,13 +298,10 @@ export default class TableTypeForm extends React.Component{
                         <Col span={22}>
                             <Row>
                                 <Col span={2}>
-                                    <AddTableType refersh = {this.getdata.bind(this)}/>
+                                    <AddArea refersh = {this.getdata.bind(this)}/>
                                 </Col>
                                 <Col span={1}></Col>
                                 <Col span={2}>
-                                    <Button type="danger" icon="code-o" className='whiteIcon'>
-                                        <span style={{color:"white"}}>导入桌型</span>
-                                    </Button>
                                 </Col>
                                 <Col span={15}></Col>
                                 <Col span={4}>

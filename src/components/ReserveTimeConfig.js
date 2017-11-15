@@ -79,13 +79,13 @@ class ReserveTimeConfig extends React.Component{
                 that.setState({
                     id:jsonData.configInfo.id,
                     value:jsonData.configInfo.reservePattern,
-                    extractCount:jsonData.configInfo.extractCount
+                    reserveTime:jsonData.configInfo.reserveTime
                 });
             }else if(jsonData.configInfo.reservePattern == 2){
                 that.setState({
                     id:jsonData.configInfo.id,
                     value:jsonData.configInfo.reservePattern,
-                    reserveTime:jsonData.configInfo.reserveTime
+                    extractCount:jsonData.configInfo.extractCount
                 });
             }else{
                 that.setState({
@@ -111,9 +111,9 @@ class ReserveTimeConfig extends React.Component{
 
                 <div className="machineConfig">
                     <RadioGroup onChange={this.onChange} value={this.state.value}>
-                        <Radio value={1}>保留号码，逐桌顺延，循环<Input size="small" value={this.state.extractCount} style={{ width: 50 }} onChange={this.extractCountChange} disabled = { this.state.value == 1 ? false : true}/>次后自动取消排号</Radio>
-                        <Radio value={2}>被叫号后，保留号码<Input size="small" value={this.state.reserveTime} style={{ width: 50 }} onChange = {this.reserveTimeChange} disabled = { this.state.value == 2 ? false : true}/>分钟</Radio>
-                        <Radio value={3}>不顺延，过号作废</Radio>
+                        <Radio value={2}>保留号码，逐桌顺延，循环<Input size="small" value={this.state.extractCount} style={{ width: 50 }} onChange={this.extractCountChange} disabled = { this.state.value == 2 ? false : true}/>次后自动取消排号</Radio>
+                        <Radio value={3}>被叫号后，保留号码<Input size="small" value={this.state.reserveTime} style={{ width: 50 }} onChange = {this.reserveTimeChange} disabled = { this.state.value == 3 ? false : true}/>分钟</Radio>
+                        <Radio value={1}>不顺延，过号作废</Radio>
                     </RadioGroup>
                 </div>
             </div>
