@@ -21,12 +21,10 @@
     "eject": "react-scripts eject"
   },
   "proxy":{
-    "/iqesTT": {
-      "target": "http://172.21.84.104:3333",
+    "/restaurant": {
+      "target": "http://172.21.84.91:8080/",
       "ws": true,
       "secure":false
     }
   }
-
-
 }

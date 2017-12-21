@@ -61,11 +61,7 @@ const CreateForm = Form.create()(
                             getValueFromEvent: this.normFile,
 
                         })(
-                            <Upload name="menuPic">
-                                <Button>
-                                    <Icon type="upload" /> Click to upload
-                                </Button>
-                            </Upload>
+                         <Input type="file" />
                         )}
                     </FormItem>
                     <FormItem label="菜品描述" {...formItemLayout}>
@@ -88,6 +84,7 @@ const error = () => {
 export default class AddMenu extends React.Component {
     state = {
         visible: false,
+        img :""
     };
     showModal = () => {
         this.setState({ visible: true });

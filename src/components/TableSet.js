@@ -201,7 +201,6 @@ export default class TableTypeForm extends React.Component{
         );
     }
 
-
     handleChange(key, index, value) {
         console.log("888");
         const { data } = this.state;

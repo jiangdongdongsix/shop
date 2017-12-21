@@ -8,3 +8,4 @@ export function changeName(name) {
         name:name
     }
 }
+

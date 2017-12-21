@@ -139,7 +139,7 @@ class PicturesWall extends React.Component {
                             <img alt="example" style={{ width: '100%' }} src={previewImage} />
                         </Modal>
                         <Upload
-                            action={"/iqesTT/restaurant/restaurantPhoto?displayArea="+ this.state.displayArea}
+                            action={"/restaurant/restaurantPhoto?displayArea="+ this.state.displayArea}
                             listType="picture-card"
                             fileList={fileList}
                             onRemove={this.handleRemove}
