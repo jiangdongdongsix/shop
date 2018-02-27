@@ -21,7 +21,7 @@
     "eject": "react-scripts eject"
   },
   "proxy":{
-    "/restaurant": {
+    "/iqesTT": {
       "target": "http://172.21.84.91:8080/",
       "ws": true,
       "secure":false
